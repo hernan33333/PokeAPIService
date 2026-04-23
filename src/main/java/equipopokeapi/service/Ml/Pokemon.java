@@ -5,6 +5,8 @@
 
 package equipopokeapi.service.Ml;
 
+import java.util.List;
+
 
 public class Pokemon {
     private int IdPokemon;
@@ -18,18 +20,17 @@ public class Pokemon {
     private String Peso;
     private String ExperienciaBase;
     private String Sonido;
+    private String region;
     
-    private Tipo tipo;
-    
-    private Region region;
-    
-    private Habilidad habilidad;
+    private List<String> Sprites;
+    private List<Tipo> tipos;
+    private List<Habilidad> habilidad;
 
     public Pokemon() {
     }
 
     public Pokemon(int IdPokemon, String Nombre, String PuntosSalud, String Ataque, String Defensa, String AtaqueEspecial, String DefensaEspecial, String Velocidad, String Peso, 
-            String ExperienciaBase, String Sonido,  Tipo tipo, Region region, Habilidad habilidad) {
+            String ExperienciaBase, String Sonido, List<Tipo> tipos, String region, List<Habilidad> habilidad) {
         this.IdPokemon = IdPokemon;
         this.Nombre = Nombre;
         this.PuntosSalud = PuntosSalud;
@@ -41,7 +42,7 @@ public class Pokemon {
         this.Peso = Peso;
         this.ExperienciaBase = ExperienciaBase;
         this.Sonido = Sonido;
-        this.tipo = tipo;
+        this.tipos = tipos;
         this.habilidad = habilidad;
     }
 
@@ -133,28 +134,36 @@ public class Pokemon {
         this.Sonido = Sonido;
     }
 
-    public Tipo getTipo() {
-        return tipo;
+    public List<Tipo> getTipos() {
+        return tipos;
     }
 
-    public void setTipo(Tipo tipo) {
-        this.tipo = tipo;
+    public void setTipos(List<Tipo> tipos) {
+        this.tipos = tipos;
     }
 
-    public Region getRegion() {
+    public String getRegion() {
         return region;
     }
 
-    public void setRegion(Region region) {
+    public void setRegion(String region) {
         this.region = region;
     }
 
-    public Habilidad getHabilidad() {
+    public List<Habilidad> getHabilidad() {
         return habilidad;
     }
 
-    public void setHabilidad(Habilidad habilidad) {
+    public void setHabilidad(List<Habilidad> habilidad) {
         this.habilidad = habilidad;
+    }
+
+    public List<String> getSprites() {
+        return Sprites;
+    }
+
+    public void setSprites(List<String> Sprites) {
+        this.Sprites = Sprites;
     }
     
     
