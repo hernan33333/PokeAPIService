@@ -21,8 +21,8 @@ public class DataSourceConfig {
     
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         
-        dataSource.setUrl("jdbc:oracle:thin:@192.167.0.227:1521:orcl");
-        dataSource.setUsername("HMartinezPokeAPI");
+        dataSource.setUrl("jdbc:oracle:thin:@192.167.0.62:1521:orcl");
+        dataSource.setUsername("PokemonAPIDataBase");
         dataSource.setPassword("password1");
         
         return dataSource;
