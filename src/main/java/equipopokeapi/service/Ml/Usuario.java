@@ -16,75 +16,77 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "USUARIO", uniqueConstraints = {
+@Table(name = "usuario", uniqueConstraints = {
     @UniqueConstraint(name = "pk_idusuario", columnNames = {"IdUsuario"})
 })
 public class Usuario {
     
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "IdUsuario")
-    private  Integer idUsuario;
-    @Column(name= "Nombre")
+    @Column(name = "idusuario")
+    private  Integer id_Usuario;
+    @Column(name= "nombre")
     private String nombre;
-    @Column(name ="Contraseña")
+    @Column(name ="contraseña")
     private String contraseña;
     @Column(name = "correo")        
     private String correo;
     
-//
+    @JoinColumn(name = "idrol")
+    @ManyToOne
+    private Rol rol;
     
     
     public Usuario() {
     }
 
-    public Usuario(Integer IdUsuario, String Nombre, String Cintraseña, String Correo) {
-        this.idUsuario = IdUsuario;
-        this.nombre = Nombre;
-        this.contraseña = Cintraseña;
-        this.correo = Correo;
-//        this.rol = rol;
+    public Usuario(Integer id_Usuario, String nombre, String contraseña, String correo, Rol rol) {
+        this.id_Usuario = id_Usuario;
+        this.nombre = nombre;
+        this.contraseña = contraseña;
+        this.correo = correo;
+        this.rol = rol;
     }
 
     public Integer getIdUsuario() {
-        return idUsuario;
+        return id_Usuario;
     }
 
-    public void setIdUsuario(Integer IdUsuario) {
-        this.idUsuario = IdUsuario;
+    public void setIdUsuario(Integer idUsuario) {
+        this.id_Usuario = idUsuario;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String Nombre) {
-        this.nombre = Nombre;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getContraseña() {
         return contraseña;
     }
 
-    public void setContraseña(String Contraseña) {
-        this.contraseña = Contraseña;
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
     }
 
     public String getCorreo() {
         return correo;
     }
 
-    public void setCorreo(String Correo) {
-        this.correo = Correo;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
-//    public Rol getRol() {
-//        return rol;
-//    }
-//
-//    public void setRol(Rol rol) {
-//        this.rol = rol;
-//    }
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
     
     
 }

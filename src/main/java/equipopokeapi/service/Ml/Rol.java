@@ -14,15 +14,15 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "Rol", uniqueConstraints = {
+@Table(name = "rol", uniqueConstraints = {
     @UniqueConstraint(name = "pk_idRol", columnNames = {"IdRol"})
 })
 public class Rol {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "IdRol")
+    @Column(name = "idrol")
 private Integer idRol;
-    @Column(name = "Nombre")
+    @Column(name = "nombre")
 private String Nombre;
 
     public Rol() {

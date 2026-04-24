@@ -13,6 +13,9 @@ public interface IUsuario {
     Result  Add(Usuario usuario);
     Result Get();
     Result GetRol();
+    Result Update(Usuario usuario);
+    Result GetById(Integer Id_Usuario);
+    Result Delete(Integer idUsuario);
             
 
 }

@@ -48,7 +48,7 @@ public class UsuarioImplementación implements IUsuario{
     public Result Get() {
         Result result = new Result();
         try{
-            TypedQuery<Usuario> queryUsuario = entitimanager.createQuery("FROM usuario", Usuario.class);
+            TypedQuery<Usuario> queryUsuario = entitimanager.createQuery("FROM Usuario", Usuario.class);
             List<Usuario> usuarios = queryUsuario.getResultList();
             result.objects = new ArrayList<>(usuarios);
             
@@ -79,6 +79,76 @@ public class UsuarioImplementación implements IUsuario{
         }
         return result;
     }
+
+    @Override
+    @Transactional
+    public Result Update(Usuario usuario) {
+        Result result= new Result();
+        try{
+            Usuario usuariob = entitimanager.find(Usuario.class,  usuario.getIdUsuario());
+            if(usuariob != null){
+                
+                usuariob.setNombre(usuario.getNombre());
+                usuariob.setCorreo(usuario.getCorreo());
+                usuariob.setContraseña(usuario.getContraseña());
+                usuariob.setRol(usuario.getRol());    
+                 entitimanager.merge(usuariob);
+
+            result.correct = true;
+            }
+        }catch(Exception ex){
+           result.correct = false;
+           result.errorMessage = ex.getLocalizedMessage();
+           result.ex = ex;
+            
+        }
+        return result;
+    }
+
+    @Override
+    public Result GetById(Integer Id_Usuario) {
+        Result result = new Result();
+        try{
+            Usuario usuario = entitimanager.find(Usuario.class, Id_Usuario);
+            if(usuario != null){
+                result.object= usuario;
+                result.correct = true;
+            }else{
+                result.correct = false;
+                result.errorMessage = ("Usuario no encontrado");
+            }
+            
+        }catch(Exception ex){
+            result.correct = false;
+            result.errorMessage = ex.getLocalizedMessage();
+            result.ex = ex;
+        }
+        return result;
+    }
+
+    @Override
+    @Transactional
+    public Result Delete(Integer idUsuario) {
+        Result result = new Result();
+        try{
+            Usuario usuario = entitimanager.find(Usuario.class, idUsuario);
+            
+            if(usuario != null){
+                entitimanager.remove(usuario);
+                    result.correct = true;
+            }else{
+                    result.correct = false;
+                    result.errorMessage = ("Usuario no encontrado");
+            }
+        }catch(Exception ex){
+          result.correct = false;
+          result.errorMessage = ex.getLocalizedMessage();
+          result.ex = ex;
+        }
+        return result;
+    }
+    
+   
     }
     
 
