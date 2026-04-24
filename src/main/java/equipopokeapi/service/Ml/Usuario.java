@@ -5,66 +5,86 @@
 
 package equipopokeapi.service.Ml;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
+@Entity
+@Table(name = "USUARIO", uniqueConstraints = {
+    @UniqueConstraint(name = "pk_idusuario", columnNames = {"IdUsuario"})
+})
 public class Usuario {
     
-    private int IdUsuario;
-    private String Nombre;
-    private String Cintraseña;
-    private String Correo;
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "IdUsuario")
+    private  Integer idUsuario;
+    @Column(name= "Nombre")
+    private String nombre;
+    @Column(name ="Contraseña")
+    private String contraseña;
+    @Column(name = "correo")        
+    private String correo;
     
-    private Rol rol;
-
+//
+    
+    
     public Usuario() {
     }
 
-    public Usuario(int IdUsuario, String Nombre, String Cintraseña, String Correo, Rol rol) {
-        this.IdUsuario = IdUsuario;
-        this.Nombre = Nombre;
-        this.Cintraseña = Cintraseña;
-        this.Correo = Correo;
-        this.rol = rol;
+    public Usuario(Integer IdUsuario, String Nombre, String Cintraseña, String Correo) {
+        this.idUsuario = IdUsuario;
+        this.nombre = Nombre;
+        this.contraseña = Cintraseña;
+        this.correo = Correo;
+//        this.rol = rol;
     }
 
-    public int getIdUsuario() {
-        return IdUsuario;
+    public Integer getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setIdUsuario(int IdUsuario) {
-        this.IdUsuario = IdUsuario;
+    public void setIdUsuario(Integer IdUsuario) {
+        this.idUsuario = IdUsuario;
     }
 
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
     public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
+        this.nombre = Nombre;
     }
 
-    public String getCintraseña() {
-        return Cintraseña;
+    public String getContraseña() {
+        return contraseña;
     }
 
-    public void setCintraseña(String Cintraseña) {
-        this.Cintraseña = Cintraseña;
+    public void setContraseña(String Contraseña) {
+        this.contraseña = Contraseña;
     }
 
     public String getCorreo() {
-        return Correo;
+        return correo;
     }
 
     public void setCorreo(String Correo) {
-        this.Correo = Correo;
+        this.correo = Correo;
     }
 
-    public Rol getRol() {
-        return rol;
-    }
-
-    public void setRol(Rol rol) {
-        this.rol = rol;
-    }
+//    public Rol getRol() {
+//        return rol;
+//    }
+//
+//    public void setRol(Rol rol) {
+//        this.rol = rol;
+//    }
     
     
 }
