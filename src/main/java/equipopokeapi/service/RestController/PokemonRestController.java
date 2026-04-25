@@ -4,7 +4,9 @@
  */
 package equipopokeapi.service.RestController;
 
-import equipopokeapi.service.DTO.Pokemon;
+import equipopokeapi.service.DeserealizarJSON.ResultPokeAPI;
+import equipopokeapi.service.Ml.Result;
+import equipopokeapi.service.Service.PokemonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,16 +28,48 @@ public class PokemonRestController {
     @Autowired
     private WebClient webClient;
     
+    @Autowired
+    private PokemonService pokemonService;
+    
     @GetMapping
     public ResponseEntity GetAll(){
         
-        Mono<Pokemon> pokemonMono = webClient.get()
-                .uri("pokemon/25/")
-                .retrieve()
-                .bodyToMono(Pokemon.class);
-        
-        return ResponseEntity.ok().body(pokemonMono);
+        Result resultAll = new Result();
+
+        try {
+            
+            resultAll = pokemonService.GetAllPokemones();
+            
+            if (resultAll.correct) {
+                
+                if (resultAll.objects != null) {
+                    
+                    
+                    return ResponseEntity.ok(resultAll.objects.size());
+                    
+                } else {
+                
+                    return ResponseEntity.noContent().build();
+                    
+                }
+                
+            } else {
+            
+                return ResponseEntity.internalServerError().body(resultAll);
+            
+            }
+            
+        } catch (Exception ex) {
+            
+            resultAll.correct = false;
+            resultAll.errorMessage = ex.getLocalizedMessage();
+            
+            return ResponseEntity.internalServerError().body(resultAll);
+            
+        }
         
     }
+    
+    
     
 }
