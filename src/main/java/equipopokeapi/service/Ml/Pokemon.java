@@ -9,28 +9,28 @@ import java.util.List;
 
 
 public class Pokemon {
-    private int IdPokemon;
+    private Integer IdPokemon;
     private String Nombre;
-    private String PuntosSalud;
-    private String Ataque;
-    private String Defensa;
-    private String AtaqueEspecial;
-    private String DefensaEspecial;
-    private String Velocidad;
-    private String Peso;
-    private String ExperienciaBase;
+    private Integer PuntosSalud;
+    private Integer Ataque;
+    private Integer Defensa;
+    private Integer AtaqueEspecial;
+    private Integer DefensaEspecial;
+    private Integer Velocidad;
+    private Integer Peso;
+    private Integer Altura;
+    private Integer ExperienciaBase;
     private String Sonido;
-    private String region;
+    private String Region;
+    private Sprites Sprites;
     
-    private List<String> Sprites;
-    private List<Tipo> tipos;
-    private List<Habilidad> habilidad;
+    private List<Tipo> Tipos;
+    private List<Habilidad> Habilidades;
 
     public Pokemon() {
     }
 
-    public Pokemon(int IdPokemon, String Nombre, String PuntosSalud, String Ataque, String Defensa, String AtaqueEspecial, String DefensaEspecial, String Velocidad, String Peso, 
-            String ExperienciaBase, String Sonido, List<Tipo> tipos, String region, List<Habilidad> habilidad) {
+    public Pokemon(Integer IdPokemon, String Nombre, Integer PuntosSalud, Integer Ataque, Integer Defensa, Integer AtaqueEspecial, Integer DefensaEspecial, Integer Velocidad, Integer Peso, Integer Altura, Integer ExperienciaBase, String Sonido, String Region, Sprites Sprites, List<Tipo> Tipos, List<Habilidad> Habilidades) {
         this.IdPokemon = IdPokemon;
         this.Nombre = Nombre;
         this.PuntosSalud = PuntosSalud;
@@ -40,17 +40,20 @@ public class Pokemon {
         this.DefensaEspecial = DefensaEspecial;
         this.Velocidad = Velocidad;
         this.Peso = Peso;
+        this.Altura = Altura;
         this.ExperienciaBase = ExperienciaBase;
         this.Sonido = Sonido;
-        this.tipos = tipos;
-        this.habilidad = habilidad;
+        this.Region = Region;
+        this.Sprites = Sprites;
+        this.Tipos = Tipos;
+        this.Habilidades = Habilidades;
     }
 
-    public int getIdPokemon() {
+    public Integer getIdPokemon() {
         return IdPokemon;
     }
 
-    public void setIdPokemon(int IdPokemon) {
+    public void setIdPokemon(Integer IdPokemon) {
         this.IdPokemon = IdPokemon;
     }
 
@@ -62,67 +65,75 @@ public class Pokemon {
         this.Nombre = Nombre;
     }
 
-    public String getPuntosSalud() {
+    public Integer getPuntosSalud() {
         return PuntosSalud;
     }
 
-    public void setPuntosSalud(String PuntosSalud) {
+    public void setPuntosSalud(Integer PuntosSalud) {
         this.PuntosSalud = PuntosSalud;
     }
 
-    public String getAtaque() {
+    public Integer getAtaque() {
         return Ataque;
     }
 
-    public void setAtaque(String Ataque) {
+    public void setAtaque(Integer Ataque) {
         this.Ataque = Ataque;
     }
 
-    public String getDefensa() {
+    public Integer getDefensa() {
         return Defensa;
     }
 
-    public void setDefensa(String Defensa) {
+    public void setDefensa(Integer Defensa) {
         this.Defensa = Defensa;
     }
 
-    public String getAtaqueEspecial() {
+    public Integer getAtaqueEspecial() {
         return AtaqueEspecial;
     }
 
-    public void setAtaqueEspecial(String AtaqueEspecial) {
+    public void setAtaqueEspecial(Integer AtaqueEspecial) {
         this.AtaqueEspecial = AtaqueEspecial;
     }
 
-    public String getDefensaEspecial() {
+    public Integer getDefensaEspecial() {
         return DefensaEspecial;
     }
 
-    public void setDefensaEspecial(String DefensaEspecial) {
+    public void setDefensaEspecial(Integer DefensaEspecial) {
         this.DefensaEspecial = DefensaEspecial;
     }
 
-    public String getVelocidad() {
+    public Integer getVelocidad() {
         return Velocidad;
     }
 
-    public void setVelocidad(String Velocidad) {
+    public void setVelocidad(Integer Velocidad) {
         this.Velocidad = Velocidad;
     }
 
-    public String getPeso() {
+    public Integer getPeso() {
         return Peso;
     }
 
-    public void setPeso(String Peso) {
+    public void setPeso(Integer Peso) {
         this.Peso = Peso;
     }
 
-    public String getExperienciaBase() {
+    public Integer getAltura() {
+        return Altura;
+    }
+
+    public void setAltura(Integer Altura) {
+        this.Altura = Altura;
+    }
+
+    public Integer getExperienciaBase() {
         return ExperienciaBase;
     }
 
-    public void setExperienciaBase(String ExperienciaBase) {
+    public void setExperienciaBase(Integer ExperienciaBase) {
         this.ExperienciaBase = ExperienciaBase;
     }
 
@@ -134,38 +145,38 @@ public class Pokemon {
         this.Sonido = Sonido;
     }
 
-    public List<Tipo> getTipos() {
-        return tipos;
-    }
-
-    public void setTipos(List<Tipo> tipos) {
-        this.tipos = tipos;
-    }
-
     public String getRegion() {
-        return region;
+        return Region;
     }
 
-    public void setRegion(String region) {
-        this.region = region;
+    public void setRegion(String Region) {
+        this.Region = Region;
     }
 
-    public List<Habilidad> getHabilidad() {
-        return habilidad;
-    }
-
-    public void setHabilidad(List<Habilidad> habilidad) {
-        this.habilidad = habilidad;
-    }
-
-    public List<String> getSprites() {
+    public Sprites getSprites() {
         return Sprites;
     }
 
-    public void setSprites(List<String> Sprites) {
+    public void setSprites(Sprites Sprites) {
         this.Sprites = Sprites;
     }
-    
+
+    public List<Tipo> getTipos() {
+        return Tipos;
+    }
+
+    public void setTipos(List<Tipo> Tipos) {
+        this.Tipos = Tipos;
+    }
+
+    public List<Habilidad> getHabilidad() {
+        return Habilidades;
+    }
+
+    public void setHabilidad(List<Habilidad> Habilidades) {
+        this.Habilidades = Habilidades;
+    }
+
     
 
 }

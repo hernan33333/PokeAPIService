@@ -5,6 +5,7 @@
 
 package equipopokeapi.service.Ml;
 
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -13,6 +14,6 @@ public class Result {
     public String errorMessage;
     public Exception ex; 
     public Object object;
-    public List<Object> objects;
+    public HashSet<Object> objects;
 
 }
