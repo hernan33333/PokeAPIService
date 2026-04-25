@@ -5,25 +5,40 @@
 
 package equipopokeapi.service.Ml;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
+@Entity
+@Table(name = "rol", uniqueConstraints = {
+    @UniqueConstraint(name = "pk_idRol", columnNames = {"IdRol"})
+})
 public class Rol {
-private int IdRol;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idrol")
+private Integer idRol;
+    @Column(name = "nombre")
 private String Nombre;
 
     public Rol() {
     }
 
-    public Rol(int IdRol, String Nombre) {
-        this.IdRol = IdRol;
+    public Rol(Integer IdRol, String Nombre) {
+        this.idRol = IdRol;
         this.Nombre = Nombre;
     }
 
-    public int getIdRol() {
-        return IdRol;
+    public Integer getIdRol() {
+        return idRol;
     }
 
-    public void setIdRol(int IdRol) {
-        this.IdRol = IdRol;
+    public void setIdRol(Integer IdRol) {
+        this.idRol = IdRol;
     }
 
     public String getNombre() {
