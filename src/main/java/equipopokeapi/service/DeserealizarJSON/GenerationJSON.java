@@ -22,6 +22,9 @@ public class GenerationJSON {
     @JsonProperty("main_region")
     private NamedResourceJSON main_region;
     
+    @JsonProperty("pokemon_species")
+    private List<NamedResourceJSON> pokemon_species;
+    
     @JsonProperty("types")
     private List<NamedResourceJSON> types;
 
@@ -49,6 +52,14 @@ public class GenerationJSON {
         this.main_region = main_region;
     }
 
+    public List<NamedResourceJSON> getPokemon_species() {
+        return pokemon_species;
+    }
+
+    public void setPokemon_species(List<NamedResourceJSON> pokemon_species) {
+        this.pokemon_species = pokemon_species;
+    }
+    
     public List<NamedResourceJSON> getTypes() {
         return types;
     }

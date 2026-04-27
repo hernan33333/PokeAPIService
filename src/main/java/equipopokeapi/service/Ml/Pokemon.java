@@ -9,7 +9,7 @@ import java.util.List;
 
 
 public class Pokemon {
-    private Integer IdPokemon;
+    private Integer Id;
     private String Nombre;
     private Integer PuntosSalud;
     private Integer Ataque;
@@ -21,17 +21,14 @@ public class Pokemon {
     private Integer Altura;
     private Integer ExperienciaBase;
     private String Sonido;
-    private String Region;
+    private Generacion Generacion;
     private Sprites Sprites;
     
     private List<Tipo> Tipos;
     private List<Habilidad> Habilidades;
 
-    public Pokemon() {
-    }
-
-    public Pokemon(Integer IdPokemon, String Nombre, Integer PuntosSalud, Integer Ataque, Integer Defensa, Integer AtaqueEspecial, Integer DefensaEspecial, Integer Velocidad, Integer Peso, Integer Altura, Integer ExperienciaBase, String Sonido, String Region, Sprites Sprites, List<Tipo> Tipos, List<Habilidad> Habilidades) {
-        this.IdPokemon = IdPokemon;
+    public Pokemon(Integer Id, String Nombre, Integer PuntosSalud, Integer Ataque, Integer Defensa, Integer AtaqueEspecial, Integer DefensaEspecial, Integer Velocidad, Integer Peso, Integer Altura, Integer ExperienciaBase, String Sonido, Generacion Generacion, Sprites Sprites, List<Tipo> Tipos, List<Habilidad> Habilidades) {
+        this.Id = Id;
         this.Nombre = Nombre;
         this.PuntosSalud = PuntosSalud;
         this.Ataque = Ataque;
@@ -43,18 +40,18 @@ public class Pokemon {
         this.Altura = Altura;
         this.ExperienciaBase = ExperienciaBase;
         this.Sonido = Sonido;
-        this.Region = Region;
+        this.Generacion = Generacion;
         this.Sprites = Sprites;
         this.Tipos = Tipos;
         this.Habilidades = Habilidades;
     }
-
-    public Integer getIdPokemon() {
-        return IdPokemon;
+    
+    public Integer getId() {
+        return Id;
     }
 
-    public void setIdPokemon(Integer IdPokemon) {
-        this.IdPokemon = IdPokemon;
+    public void setId(Integer Id) {
+        this.Id = Id;
     }
 
     public String getNombre() {
@@ -145,12 +142,12 @@ public class Pokemon {
         this.Sonido = Sonido;
     }
 
-    public String getRegion() {
-        return Region;
+    public Generacion getGeneracion() {
+        return Generacion;
     }
 
-    public void setRegion(String Region) {
-        this.Region = Region;
+    public void setGeneracion(Generacion Generacion) {
+        this.Generacion = Generacion;
     }
 
     public Sprites getSprites() {
@@ -169,14 +166,12 @@ public class Pokemon {
         this.Tipos = Tipos;
     }
 
-    public List<Habilidad> getHabilidad() {
+    public List<Habilidad> getHabilidades() {
         return Habilidades;
     }
 
-    public void setHabilidad(List<Habilidad> Habilidades) {
+    public void setHabilidades(List<Habilidad> Habilidades) {
         this.Habilidades = Habilidades;
     }
-
-    
 
 }

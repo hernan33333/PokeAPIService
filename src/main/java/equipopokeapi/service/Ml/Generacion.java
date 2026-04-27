@@ -14,13 +14,15 @@ public class Generacion {
     
     private Integer Id;
     private String Nombre;
-    private Integer MainRegion;
+    private Region Region;
+    private List<Integer> Pokemones;
     private List<Integer> Tipos;
 
-    public Generacion(Integer Id, String Nombre, Integer MainRegion, List<Integer> Tipos) {
+    public Generacion(Integer Id, String Nombre, Region Region, List<Integer> Pokemones, List<Integer> Tipos) {
         this.Id = Id;
         this.Nombre = Nombre;
-        this.MainRegion = MainRegion;
+        this.Region = Region;
+        this.Pokemones = Pokemones;
         this.Tipos = Tipos;
     }
 
@@ -40,12 +42,20 @@ public class Generacion {
         this.Nombre = Nombre;
     }
 
-    public Integer getMainRegion() {
-        return MainRegion;
+    public Region getRegion() {
+        return Region;
     }
 
-    public void setMainRegion(Integer MainRegion) {
-        this.MainRegion = MainRegion;
+    public void setRegion(Region Region) {
+        this.Region = Region;
+    }
+
+    public List<Integer> getPokemones() {
+        return Pokemones;
+    }
+
+    public void setPokemon(List<Integer> Pokemones) {
+        this.Pokemones = Pokemones;
     }
 
     public List<Integer> getTipos() {

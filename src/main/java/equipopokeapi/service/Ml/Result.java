@@ -5,15 +5,14 @@
 
 package equipopokeapi.service.Ml;
 
-import java.util.HashSet;
 import java.util.List;
 
 
 public class Result {
-      public boolean correct;
+    public boolean correct;
     public String errorMessage;
     public Exception ex; 
     public Object object;
-    public HashSet<Object> objects;
+    public List<Object> objects;
 
 }

@@ -6,6 +6,7 @@ package equipopokeapi.service.DeserealizarJSON;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import equipopokeapi.service.DeserealizarJSON.NamedResourceJSON;
+import java.util.List;
 
 /**
  *
@@ -21,6 +22,9 @@ public class TypeJSON {
     
     @JsonProperty("generation")
     private NamedResourceJSON generation;
+    
+    @JsonProperty("pokemon")
+    private List<PokemonSlotJSON> pokemones;
 
     public Integer getId() {
         return id;
@@ -45,7 +49,13 @@ public class TypeJSON {
     public void setGeneration(NamedResourceJSON generation) {
         this.generation = generation;
     }
-    
-    
+
+    public List<PokemonSlotJSON> getPokemones() {
+        return pokemones;
+    }
+
+    public void setPokemones(List<PokemonSlotJSON> pokemones) {
+        this.pokemones = pokemones;
+    }
     
 }

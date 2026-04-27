@@ -17,8 +17,9 @@ import equipopokeapi.service.Ml.Pokemon;
 import equipopokeapi.service.Ml.Region;
 import equipopokeapi.service.Ml.Result;
 import equipopokeapi.service.Ml.Tipo;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,19 +42,21 @@ public class PokemonService {
     @Autowired
     private PokemonMapper pokemonMapper;
     
-    private HashSet<PokemonJSON> pokemonesJSON = null;
-    private HashSet<HabilidadJSON> habilidadesJSON = null;
-    private HashSet<GenerationJSON> generacionesJSON = null;
-    private HashSet<TypeJSON> tiposJSON = null;
-    private HashSet<RegionJSON> regionesJSON = null;
+    private List<PokemonJSON> pokemonesJSON = null;
+    private List<HabilidadJSON> habilidadesJSON = null;
+    private List<GenerationJSON> generacionesJSON = null;
+    private List<TypeJSON> tiposJSON = null;
+    private List<RegionJSON> regionesJSON = null;
     
-    private HashSet<Pokemon> pokemonesDTO = null;
-    private HashSet<Habilidad> habilidadesDTO = null;
-    private HashSet<Generacion> generacionesDTO = null;
-    private HashSet<Tipo> tiposDTO = null;
-    private HashSet<Region> regionesDTO = null;
+    private List<Pokemon> pokemonesDTO = new ArrayList<>();
+    private List<Habilidad> habilidadesDTO = new ArrayList<>();
+    private List<Generacion> generacionesDTO = new ArrayList<>();
+    private List<Tipo> tiposDTO = new ArrayList<>();
+    private List<Region> regionesDTO = new ArrayList<>();
     
-    public Result GetAllPokemones(){
+    private Boolean ordenados = false;
+    
+    public Result GetAll(){
     
         Result resultAll = new Result();
         
@@ -63,9 +66,11 @@ public class PokemonService {
             
             mapearElementos();
             
+            ordenarElementos();
+            
             resultAll.correct = true;
             
-            resultAll.objects = new HashSet<>(habilidadesJSON);
+            resultAll.objects = new ArrayList<>(pokemonesJSON);
             
         } catch (Exception ex) {
             
@@ -79,64 +84,73 @@ public class PokemonService {
     
     }
     
-    private void inicializarInformacion(){
+    public Result GetById(Integer Id){
     
-//        if (pokemonesDTO == null) {
-//        
-//            pokemonesJSON = new HashSet<>(obtenerRecursos("pokemon", PokemonJSON.class).block().stream()
-//                .filter(PokemonJSON.class::isInstance)
-//                .map(PokemonJSON.class::cast)
-//                .collect(Collectors.toSet())
-//            );
-//            
-//        }
+        Result resultById = new Result();
         
-        if (habilidadesJSON == null) {
+        try {
             
-            habilidadesJSON = new HashSet<>(obtenerRecursos("ability", HabilidadJSON.class).block().stream()
-                    .filter(HabilidadJSON.class::isInstance)
-                    .map(HabilidadJSON.class::cast)
-                    .collect(Collectors.toSet())
-            );
+            if (pokemonesDTO.get(Id - 1) != null) {
+                
+                resultById.correct = true;
+                resultById.object = pokemonesDTO.get(Id-1);
+                
+            } else {
+            
+                resultById.correct = false;
+                resultById.errorMessage = "No se encontró el pokemon con el ID: " + Id;
+            
+            }
+            
+            return resultById;
+            
+        } catch (Exception ex) {
+            
+            resultById.correct = false;
+            resultById.errorMessage = ex.getLocalizedMessage();
+            resultById.ex = ex;
             
         }
         
-        if (generacionesJSON == null) {
+        return resultById;
+    
+    }
+    
+    private void inicializarInformacion(){
+    
+        if (pokemonesJSON == null) {
+        
+            pokemonesJSON = new ArrayList<PokemonJSON>(obtenerRecursos("pokemon", PokemonJSON.class).block());
             
-            generacionesJSON = new HashSet<>(obtenerRecursos("generation", GenerationJSON.class).block().stream()
-                .filter(GenerationJSON.class::isInstance)
-                .map(GenerationJSON.class::cast)
-                .collect(Collectors.toSet())
+        }
+        
+        if (habilidadesJSON == null) {
             
-            );
+            habilidadesJSON = new ArrayList<HabilidadJSON>(obtenerRecursos("ability", HabilidadJSON.class).block());
+            
+        }
+        
+        if (generacionesJSON == null || generacionesDTO.isEmpty()) {
+            
+            generacionesJSON = new ArrayList<GenerationJSON>(obtenerRecursos("generation", GenerationJSON.class).block());
             
         }
         
         if (tiposJSON == null) {
             
-            tiposJSON = new HashSet<>(obtenerRecursos("type", TypeJSON.class).block().stream()
-                .filter(TypeJSON.class::isInstance)
-                .map(TypeJSON.class::cast)
-                .collect(Collectors.toSet())
-            
-            );
+            tiposJSON = new ArrayList<TypeJSON>(obtenerRecursos("type", TypeJSON.class).block());
             
         }
         
         if (regionesJSON == null) {
             
-            regionesJSON = new HashSet<>(obtenerRecursos("region", RegionJSON.class).block().stream()
-                .filter(RegionJSON.class::isInstance)
-                .map(RegionJSON.class::cast)
-                .collect(Collectors.toSet())
-            
-            );
+            regionesJSON = new ArrayList<RegionJSON>(obtenerRecursos("region", RegionJSON.class).block());
             
         }
     
     }
     
-    private Mono<Set<Object>> obtenerRecursos(String api, Class<?> clase){
+    private Mono<List> obtenerRecursos(String api, Class<?> clase){
     
         return webClient.get()
                 .uri(api)
@@ -160,18 +174,92 @@ public class PokemonService {
                         .bodyToMono(clase)
                         , 5
                 )
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     
     }
 
     private void mapearElementos() {
         
-        for (GenerationJSON generacionJSON : generacionesJSON) {
+        if (habilidadesDTO.isEmpty()) {
+         
+            for (HabilidadJSON habilidadJSON : habilidadesJSON) {
             
-            generacionesDTO.add(pokemonMapper.generacionJSONToMl(generacionJSON));
+                habilidadesDTO.add(pokemonMapper.habilidadJSONToMl(habilidadJSON));
+
+            }
             
         }
         
+        if (regionesDTO.isEmpty()) {
+         
+            for (RegionJSON regionJSON : regionesJSON) {
+            
+                regionesDTO.add(pokemonMapper.regionJSONToMl(regionJSON));
+
+            }
+            
+        }
+        
+        if (generacionesDTO.isEmpty()) {
+            
+            for (GenerationJSON generacionJSON : generacionesJSON) {
+            
+                generacionesDTO.add(pokemonMapper.generacionJSONToMl(generacionJSON, regionesDTO));
+
+            }
+            
+        }
+        
+        if (tiposDTO.isEmpty()) {
+            
+            for (TypeJSON tipoJSON : tiposJSON) {
+         
+                tiposDTO.add(pokemonMapper.tipoJSONToMl(tipoJSON));
+
+            }
+            
+        }
+        
+        if (pokemonesDTO.isEmpty()) {
+            
+            for (PokemonJSON pokemonJSON : pokemonesJSON) {
+            
+                pokemonesDTO.add(pokemonMapper.pokemonJSONToML(pokemonJSON, regionesDTO, generacionesDTO, tiposDTO, habilidadesDTO));
+
+            }
+            
+        }
+        
+    }
+    
+    private void ordenarElementos(){
+    
+        if (!ordenados) {
+            
+            ordenados = !ordenados;
+            
+            pokemonesDTO = pokemonesDTO.stream()
+                .sorted(Comparator.comparing(Pokemon::getId))
+                .collect(Collectors.toList());
+            
+            habilidadesDTO = habilidadesDTO.stream()
+                .sorted(Comparator.comparing(Habilidad::getId))
+                .collect(Collectors.toList());
+            
+            generacionesDTO = generacionesDTO.stream()
+                .sorted(Comparator.comparing(Generacion::getId))
+                .collect(Collectors.toList());
+            
+            tiposDTO = tiposDTO.stream()
+                .sorted(Comparator.comparing(Tipo::getId))
+                .collect(Collectors.toList());
+            
+            regionesDTO = regionesDTO.stream()
+                .sorted(Comparator.comparing(Region::getId))
+                .collect(Collectors.toList());
+            
+        }
+    
     }
     
 }
