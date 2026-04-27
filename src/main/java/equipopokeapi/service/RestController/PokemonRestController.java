@@ -4,16 +4,15 @@
  */
 package equipopokeapi.service.RestController;
 
-import equipopokeapi.service.DeserealizarJSON.ResultPokeAPI;
 import equipopokeapi.service.Ml.Result;
 import equipopokeapi.service.Service.PokemonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 /**
  *
@@ -38,7 +37,7 @@ public class PokemonRestController {
 
         try {
             
-            resultAll = pokemonService.GetAllPokemones();
+            resultAll = pokemonService.GetAll();
             
             if (resultAll.correct) {
                 
@@ -70,6 +69,23 @@ public class PokemonRestController {
         
     }
     
+    @GetMapping("/{IdPokemon}")
+    public ResponseEntity GetById(@PathVariable("IdPokemon") Integer IdPokemon){
     
+        Result resultById = new Result();
+            
+        resultById = pokemonService.GetById(IdPokemon);
+
+        if (resultById.correct) {
+
+            return ResponseEntity.ok().body(resultById);
+
+        } else {
+
+            return ResponseEntity.notFound().build();
+
+        }
+
+    }
     
 }
