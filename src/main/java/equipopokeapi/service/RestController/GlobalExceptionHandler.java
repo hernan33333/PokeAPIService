@@ -1,0 +1,30 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package equipopokeapi.service.RestController;
+
+import equipopokeapi.service.Ml.Result;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+/**
+ *
+ * @author Alien 7
+ */
+@ControllerAdvice
+public class GlobalExceptionHandler {
+    
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Result> manejoExcepcionGeneral(Exception ex){
+    
+        Result error = new Result();
+        error.correct = false;
+        error.errorMessage = "Hubo un problema con el servidor.";
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    
+    }
+        
+}
