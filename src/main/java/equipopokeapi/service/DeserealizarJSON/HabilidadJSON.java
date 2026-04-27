@@ -27,6 +27,9 @@ public class HabilidadJSON {
     
     @JsonProperty("generation")
     private NamedResourceJSON generation;
+    
+    @JsonProperty("pokemon")
+    private List<PokemonSlotJSON> pokemon;
 
     public Integer getId() {
         return id;
@@ -66,6 +69,14 @@ public class HabilidadJSON {
 
     public void setGeneration(NamedResourceJSON generation) {
         this.generation = generation;
+    }
+
+    public List<PokemonSlotJSON> getPokemon() {
+        return pokemon;
+    }
+
+    public void setPokemon(List<PokemonSlotJSON> pokemon) {
+        this.pokemon = pokemon;
     }
     
 }

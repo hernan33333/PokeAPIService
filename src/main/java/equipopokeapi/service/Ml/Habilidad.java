@@ -5,27 +5,39 @@
 
 package equipopokeapi.service.Ml;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
+
 
 public class Habilidad {
-    private int IdHabilidad;
+    
+    private Integer Id;
     private String Nombre;
-    private String Efecto;
+    private List<String> EfectosEntrada;
+    private List<String> EfectosCambio;
+    private Integer Generacion;
+    
+    @JsonIgnore
+    private List<Integer> pokemones;
 
     public Habilidad() {
     }
 
-    public Habilidad(int IdHabilidad, String Nombre, String Efecto) {
-        this.IdHabilidad = IdHabilidad;
+    public Habilidad(Integer Id, String Nombre, List<String> EfectosEntrada, List<String> EfectosCambio, Integer Generacion, List<Integer> pokemones) {
+        this.Id = Id;
         this.Nombre = Nombre;
-        this.Efecto = Efecto;
+        this.EfectosEntrada = EfectosEntrada;
+        this.EfectosCambio = EfectosCambio;
+        this.Generacion = Generacion;
+        this.pokemones = pokemones;
     }
 
-    public int getIdHabilidad() {
-        return IdHabilidad;
+    public Integer getId() {
+        return Id;
     }
 
-    public void setIdHabilidad(int IdHabilidad) {
-        this.IdHabilidad = IdHabilidad;
+    public void setId(Integer Id) {
+        this.Id = Id;
     }
 
     public String getNombre() {
@@ -36,14 +48,35 @@ public class Habilidad {
         this.Nombre = Nombre;
     }
 
-    public String getEfecto() {
-        return Efecto;
+    public List<String> getEfectosEntrada() {
+        return EfectosEntrada;
     }
 
-    public void setEfecto(String Efecto) {
-        this.Efecto = Efecto;
+    public void setEfectosEntrada(List<String> EfectosEntrada) {
+        this.EfectosEntrada = EfectosEntrada;
     }
-    
-    
 
+    public List<String> getEfectosCambio() {
+        return EfectosCambio;
+    }
+
+    public void setEfectosCambio(List<String> EfectosCambio) {
+        this.EfectosCambio = EfectosCambio;
+    }
+
+    public Integer getGeneracion() {
+        return Generacion;
+    }
+
+    public void setGeneracion(Integer Generacion) {
+        this.Generacion = Generacion;
+    }
+
+    public List<Integer> getPokemones() {
+        return pokemones;
+    }
+
+    public void setPokemones(List<Integer> pokemones) {
+        this.pokemones = pokemones;
+    }
 }

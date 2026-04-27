@@ -11,7 +11,7 @@ import equipopokeapi.service.DeserealizarJSON.NamedResourceJSON;
  *
  * @author Alien 7
  */
-class AbilitySlotJSON {
+public class AbilitySlotJSON {
     
     @JsonProperty("ability")
     public NamedResourceJSON ability;
@@ -21,4 +21,30 @@ class AbilitySlotJSON {
     
     @JsonProperty("slot")
     public Integer slot;
+
+    public NamedResourceJSON getAbility() {
+        return ability;
+    }
+
+    public void setAbility(NamedResourceJSON ability) {
+        this.ability = ability;
+    }
+
+    public Boolean getIsHidden() {
+        return isHidden;
+    }
+
+    public void setIsHidden(Boolean isHidden) {
+        this.isHidden = isHidden;
+    }
+
+    public Integer getSlot() {
+        return slot;
+    }
+
+    public void setSlot(Integer slot) {
+        this.slot = slot;
+    }
+    
+    
 }
