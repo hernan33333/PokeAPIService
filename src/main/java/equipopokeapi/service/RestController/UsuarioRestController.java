@@ -48,28 +48,6 @@ public class UsuarioRestController {
         }
     
     }
-      @GetMapping("/rol")
-    public ResponseEntity<?>GetAlRol(){
-       
-        try{
-             Result result = usuarioImplementacion.GetRol();
-             
-             if(result.correct){
-                 if(result.objects != null &&  !result.objects.isEmpty()){
-                 return ResponseEntity.ok(result.objects);
-             }else{
-                    return ResponseEntity.noContent().build();
-                 }
-             }else{
-                     return ResponseEntity.badRequest().body(result.errorMessage);
-                     }
-             
-            
-        }catch(Exception ex){
-           return ResponseEntity.status(500).body(ex.getMessage());
-        }
-    
-    }
     @PostMapping("/adduser")
     public ResponseEntity<Result>AddUsuario(   @RequestPart("adduser") Usuario usuario){
         Result result = usuarioImplementacion.Add(usuario);

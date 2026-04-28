@@ -6,7 +6,6 @@
 package equipopokeapi.service.DAO;
 
 import equipopokeapi.service.Ml.Result;
-import equipopokeapi.service.Ml.Rol;
 import equipopokeapi.service.Ml.Usuario;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -46,24 +45,6 @@ public class UsuarioImplementación implements IUsuario{
         try{
             TypedQuery<Usuario> queryUsuario = entitimanager.createQuery("FROM Usuario", Usuario.class);
             List<Usuario> usuarios = queryUsuario.getResultList();
-            result.objects = new ArrayList<>(usuarios);
-            
-            result.correct = true;
-            
-        }catch(Exception ex){
-            result.correct = false;
-            result.errorMessage = ex.getLocalizedMessage();
-            result.ex = ex;
-        }
-        return result;
-    }
-
-    @Override
-    public Result GetRol() {
-           Result result = new Result();
-        try{
-            TypedQuery<Rol> queryUsuario = entitimanager.createQuery("FROM Rol", Rol.class);
-            List<Rol> usuarios = queryUsuario.getResultList();
             result.objects = new ArrayList<>(usuarios);
             
             result.correct = true;

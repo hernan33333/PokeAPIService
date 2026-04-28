@@ -58,6 +58,15 @@ public class PokemonRestController {
     
         Result resultOffset = new Result();
         
+        if (pokemonService.checkPokemones()) {
+            
+            resultOffset.correct = false;
+            resultOffset.errorMessage = "No se han cargado los pokemones.";
+            
+            return ResponseEntity.internalServerError().body(resultOffset);
+            
+        }
+        
         resultOffset = pokemonService.GetAll(offset);
         
         if (resultOffset.correct) {

@@ -79,7 +79,7 @@ public class PokemonService {
         Result resultOffset = new Result();
         
         resultOffset.correct = true;
-        resultOffset.objects = new ArrayList<>(pokemonesDTO.subList((offset <= 19) ? 0 : offset-19, offset));
+        resultOffset.objects = new ArrayList<>(pokemonesDTO.subList((offset <= 19 || offset > pokemonesDTO.size()) ? 0 : offset-19, (offset < 0 || offset > pokemonesDTO.size()) ? 0 : offset));
         
         return resultOffset;
     
@@ -88,13 +88,6 @@ public class PokemonService {
     public Result GetById(Integer Id){
     
         Result resultById = new Result();
-            
-        if (pokemonesDTO.isEmpty()) {
-            
-            resultById.correct = false;
-            resultById.errorMessage = "No se han cargado los pokemones.";
-            
-        }
         
         if (pokemonesDTO.get(Id - 1) != null) {
 
