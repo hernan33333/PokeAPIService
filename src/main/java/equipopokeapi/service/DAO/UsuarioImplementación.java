@@ -11,12 +11,10 @@ import equipopokeapi.service.Ml.Usuario;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
 
 
 @Repository
@@ -25,10 +23,8 @@ public class UsuarioImplementación implements IUsuario{
     @Autowired
     private EntityManager entitimanager;
 
-
-
     @Override
-  @Transactional
+    @Transactional
     public Result Add(Usuario usuario) {
         Result result = new Result();
         try{
@@ -148,8 +144,7 @@ public class UsuarioImplementación implements IUsuario{
         return result;
     }
     
-   
-    }
+}
     
 
 

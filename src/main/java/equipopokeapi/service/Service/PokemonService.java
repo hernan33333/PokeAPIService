@@ -59,60 +59,62 @@ public class PokemonService {
     public Result GetAll(){
     
         Result resultAll = new Result();
-        
-        try {
             
-            inicializarInformacion();
-            
-            mapearElementos();
-            
-            ordenarElementos();
-            
-            resultAll.correct = true;
-            
-            resultAll.objects = new ArrayList<>(pokemonesJSON);
-            
-        } catch (Exception ex) {
-            
-            resultAll.correct = false;
-            resultAll.errorMessage = ex.getLocalizedMessage();
-            resultAll.ex = ex;
-            
-        }
+        inicializarInformacion();
+
+        mapearElementos();
+
+        ordenarElementos();
+
+        resultAll.correct = true;
+
+        resultAll.objects = new ArrayList<>(pokemonesDTO.subList(0, 19));
         
         return resultAll;
+    
+    }
+    
+    public Result GetAll(Integer offset){
+        
+        Result resultOffset = new Result();
+        
+        resultOffset.correct = true;
+        resultOffset.objects = new ArrayList<>(pokemonesDTO.subList((offset <= 19) ? 0 : offset-19, offset));
+        
+        return resultOffset;
     
     }
     
     public Result GetById(Integer Id){
     
         Result resultById = new Result();
-        
-        try {
             
-            if (pokemonesDTO.get(Id - 1) != null) {
-                
-                resultById.correct = true;
-                resultById.object = pokemonesDTO.get(Id-1);
-                
-            } else {
-            
-                resultById.correct = false;
-                resultById.errorMessage = "No se encontró el pokemon con el ID: " + Id;
-            
-            }
-            
-            return resultById;
-            
-        } catch (Exception ex) {
+        if (pokemonesDTO.isEmpty()) {
             
             resultById.correct = false;
-            resultById.errorMessage = ex.getLocalizedMessage();
-            resultById.ex = ex;
+            resultById.errorMessage = "No se han cargado los pokemones.";
             
         }
         
+        if (pokemonesDTO.get(Id - 1) != null) {
+
+            resultById.correct = true;
+            resultById.object = pokemonesDTO.get(Id-1);
+
+        } else {
+
+            resultById.correct = false;
+            resultById.errorMessage = "No se encontró el pokemon con el ID: " + Id;
+
+        }
+
         return resultById;
+    
+    }
+    
+    public boolean checkPokemones(){
+    
+        return pokemonesDTO.isEmpty();
     
     }
     
