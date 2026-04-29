@@ -26,6 +26,7 @@ import equipopokeapi.service.Service.EspecieJSON;
 import equipopokeapi.service.Service.FlavorTextJSON;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.springframework.stereotype.Component;
 
 /**
@@ -68,8 +69,12 @@ public class PokemonMapper {
             
         }
         
+        if (pokemonJSON.getId() == 127) {
+            System.out.println("");
+        }
+        
         Especie especie = especiesDTO.stream()
-            .filter(specie -> specie.getId() == pokemonJSON.getId())
+            .filter(specie -> Objects.equals(specie.getId(), pokemonJSON.getId()))
             .findFirst()
             .orElse(null);
         
