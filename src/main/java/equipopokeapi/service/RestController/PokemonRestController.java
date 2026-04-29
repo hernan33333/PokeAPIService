@@ -127,4 +127,42 @@ public class PokemonRestController {
     
     }
     
+    @GetMapping("/generacion")
+    public ResponseEntity GetAllGeneraciones(){
+    
+        Result resultGeneraciones = new Result();
+        
+        resultGeneraciones = pokemonService.GetGeneraciones();
+        
+        if (resultGeneraciones.correct) {
+            
+            return ResponseEntity.ok().body(resultGeneraciones);
+            
+        } else {
+        
+            return ResponseEntity.internalServerError().body(resultGeneraciones);
+        
+        }
+    
+    }
+    
+    @GetMapping("/tipos")
+    public ResponseEntity GetAllTipos(){
+    
+        Result resultTipos = new Result();
+        
+        resultTipos = pokemonService.GetTipos();
+        
+        if (resultTipos.correct) {
+            
+            return ResponseEntity.ok().body(resultTipos);
+            
+        } else {
+        
+            return ResponseEntity.internalServerError().body(resultTipos);
+        
+        }
+    
+    }
+    
 }

@@ -20,6 +20,9 @@ public class EspecieJSON {
     @JsonProperty("base_happiness")
     private Integer base_happiness;
     
+    @JsonProperty("name")
+    private String name;
+    
     @JsonProperty("color")
     private NamedResourceJSON color;
     
@@ -48,6 +51,14 @@ public class EspecieJSON {
         this.base_happiness = base_happiness;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
     public NamedResourceJSON getColor() {
         return color;
     }
