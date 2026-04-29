@@ -4,12 +4,36 @@
  */
 package equipopokeapi.service.DeserealizarJSON;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  *
  * @author Alien 7
  */
 public class EffectEntrieJSON {
     
-    public String effect;
+    @JsonProperty("effect")
+    private String effect;
+    
+    @JsonProperty("language")
+    private NamedResourceJSON language;
+
+    public String getEffect() {
+        return effect;
+    }
+
+    public void setEffect(String effect) {
+        this.effect = effect;
+    }
+
+    public NamedResourceJSON getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(NamedResourceJSON language) {
+        this.language = language;
+    }
+    
+    
     
 }
