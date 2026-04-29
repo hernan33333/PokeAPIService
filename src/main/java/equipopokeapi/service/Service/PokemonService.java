@@ -21,6 +21,7 @@ import equipopokeapi.service.Ml.Tipo;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -92,10 +93,16 @@ public class PokemonService {
     
         Result resultById = new Result();
         
-        if (pokemonesDTO.get(Id - 1) != null) {
+        Pokemon pokemonBuscar = pokemonesDTO.stream()
+                                            .filter(pokemon -> Objects.equals(pokemon.getId(), Id))
+                                            .findFirst()
+                                            .orElse(null);
+
+        
+        if (pokemonBuscar != null) {
 
             resultById.correct = true;
-            resultById.object = pokemonesDTO.get(Id-1);
+            resultById.object = pokemonBuscar;
 
         } else {
 
@@ -124,6 +131,46 @@ public class PokemonService {
         }
         
         return resultRegion;
+    
+    }
+    
+    public Result GetGeneraciones(){
+    
+        Result resultGeneraciones = new Result();
+
+        if (generacionesDTO.isEmpty()) {
+            
+            resultGeneraciones.correct = false;
+            resultGeneraciones.errorMessage = "No se han inicializado los valores de las generaciones.";
+            
+        } else {
+        
+            resultGeneraciones.correct = true;
+            resultGeneraciones.objects = new ArrayList<>(generacionesDTO);
+        
+        }
+        
+        return resultGeneraciones;
+    
+    }
+    
+    public Result GetTipos(){
+    
+        Result resultTipos = new Result();
+        
+        if (tiposDTO.isEmpty()) {
+            
+            resultTipos.correct = false;
+            resultTipos.errorMessage = "No se han inicializado los valores de las tipos.";
+            
+        } else {
+        
+            resultTipos.correct = true;
+            resultTipos.objects = new ArrayList<>(tiposDTO);
+        
+        }
+        
+        return resultTipos;
     
     }
     

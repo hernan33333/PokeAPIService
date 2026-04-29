@@ -69,12 +69,18 @@ public class PokemonMapper {
             
         }
         
-        if (pokemonJSON.getId() == 127) {
-            System.out.println("");
-        }
-        
         Especie especie = especiesDTO.stream()
-            .filter(specie -> Objects.equals(specie.getId(), pokemonJSON.getId()))
+            .filter(specie -> {
+            
+                if (Objects.equals(specie.getId(), pokemonJSON.getId()) || Objects.equals(specie.getNombre(), pokemonJSON.getName().split("-")[0])) {
+                
+                    return true;
+                    
+                }
+                
+                return false;
+            
+            })
             .findFirst()
             .orElse(null);
         
@@ -242,6 +248,7 @@ public class PokemonMapper {
         Especie especie = new Especie(
                 especieJSON.getId(),
                 especieJSON.getBase_happiness(),
+                especieJSON.getName(),
                 especieJSON.getColor().getName(),
                 (habitat == null) ? null : habitat.getName(),
                 descripcion,
