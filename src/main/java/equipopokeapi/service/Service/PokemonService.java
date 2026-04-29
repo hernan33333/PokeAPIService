@@ -4,6 +4,7 @@
  */
 package equipopokeapi.service.Service;
 
+import equipopokeapi.service.Ml.Especie;
 import equipopokeapi.service.Component.PokemonMapper;
 import equipopokeapi.service.DeserealizarJSON.RegionJSON;
 import equipopokeapi.service.DeserealizarJSON.GenerationJSON;
@@ -47,12 +48,14 @@ public class PokemonService {
     private List<GenerationJSON> generacionesJSON = null;
     private List<TypeJSON> tiposJSON = null;
     private List<RegionJSON> regionesJSON = null;
+    private List<EspecieJSON> especiesJSON = null;
     
     private List<Pokemon> pokemonesDTO = new ArrayList<>();
     private List<Habilidad> habilidadesDTO = new ArrayList<>();
     private List<Generacion> generacionesDTO = new ArrayList<>();
     private List<Tipo> tiposDTO = new ArrayList<>();
     private List<Region> regionesDTO = new ArrayList<>();
+    private List<Especie> especiesDTO = new ArrayList<>();
     
     private Boolean ordenados = false;
     
@@ -142,6 +145,12 @@ public class PokemonService {
             regionesJSON = new ArrayList<RegionJSON>(obtenerRecursos("region", RegionJSON.class).block());
             
         }
+        
+        if (especiesJSON == null) {
+            
+            especiesJSON = new ArrayList<>(obtenerRecursos("pokemon-species/", EspecieJSON.class).block());
+            
+        }
     
     }
     
@@ -215,11 +224,21 @@ public class PokemonService {
             
         }
         
+        if (especiesDTO.isEmpty()) {
+            
+            for (EspecieJSON especieJSON : especiesJSON) {
+                
+                especiesDTO.add(pokemonMapper.especieJSONToMl(especieJSON));
+                
+            }
+            
+        }
+        
         if (pokemonesDTO.isEmpty()) {
             
             for (PokemonJSON pokemonJSON : pokemonesJSON) {
             
-                pokemonesDTO.add(pokemonMapper.pokemonJSONToML(pokemonJSON, regionesDTO, generacionesDTO, tiposDTO, habilidadesDTO));
+                pokemonesDTO.add(pokemonMapper.pokemonJSONToML(pokemonJSON, regionesDTO, generacionesDTO, tiposDTO, habilidadesDTO, especiesDTO));
 
             }
             
@@ -251,6 +270,10 @@ public class PokemonService {
             
             regionesDTO = regionesDTO.stream()
                 .sorted(Comparator.comparing(Region::getId))
+                .collect(Collectors.toList());
+            
+            especiesDTO = especiesDTO.stream()
+                .sorted(Comparator.comparing(Especie::getId))
                 .collect(Collectors.toList());
             
         }
