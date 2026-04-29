@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-package equipopokeapi.service.Controller;
+package equipopokeapi.service.RestController;
 
 import equipopokeapi.service.DAO.UsuarioImplementación;
 import equipopokeapi.service.Ml.Result;
@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController 
-@RequestMapping("/Pokeapi")
-public class UsuarioCintroller {
+@RequestMapping("/pokeapi/usuario")
+public class UsuarioRestController {
     @Autowired
     private UsuarioImplementación usuarioImplementacion;
     
@@ -39,30 +39,8 @@ public class UsuarioCintroller {
                     return ResponseEntity.noContent().build();
                  }
              }else{
-                     return ResponseEntity.badRequest().body(result.errorMessage);
-                     }
-             
-            
-        }catch(Exception ex){
-           return ResponseEntity.status(500).body(ex.getMessage());
-        }
-    
-    }
-      @GetMapping("/rol")
-    public ResponseEntity<?>GetAlRol(){
-       
-        try{
-             Result result = usuarioImplementacion.GetRol();
-             
-             if(result.correct){
-                 if(result.objects != null &&  !result.objects.isEmpty()){
-                 return ResponseEntity.ok(result.objects);
-             }else{
-                    return ResponseEntity.noContent().build();
-                 }
-             }else{
-                     return ResponseEntity.badRequest().body(result.errorMessage);
-                     }
+                return ResponseEntity.badRequest().body(result.errorMessage);
+            }
              
             
         }catch(Exception ex){

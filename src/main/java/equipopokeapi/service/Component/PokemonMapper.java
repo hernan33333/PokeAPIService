@@ -15,12 +15,15 @@ import equipopokeapi.service.DeserealizarJSON.PokemonSlotJSON;
 import equipopokeapi.service.DeserealizarJSON.RegionJSON;
 import equipopokeapi.service.DeserealizarJSON.TypeJSON;
 import equipopokeapi.service.DeserealizarJSON.TypeSlot;
+import equipopokeapi.service.Ml.Especie;
 import equipopokeapi.service.Ml.Generacion;
 import equipopokeapi.service.Ml.Habilidad;
 import equipopokeapi.service.Ml.Pokemon;
 import equipopokeapi.service.Ml.Region;
 import equipopokeapi.service.Ml.Sprites;
 import equipopokeapi.service.Ml.Tipo;
+import equipopokeapi.service.Service.EspecieJSON;
+import equipopokeapi.service.Service.FlavorTextJSON;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Component;
@@ -33,7 +36,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PokemonMapper {
     
-    public Pokemon pokemonJSONToML(PokemonJSON pokemonJSON, List<Region> regionesDTO, List<Generacion> generacionesDTO, List<Tipo> tiposDTO, List<Habilidad> habilidadesDTO){
+    public Pokemon pokemonJSONToML(PokemonJSON pokemonJSON, List<Region> regionesDTO, List<Generacion> generacionesDTO, List<Tipo> tiposDTO, List<Habilidad> habilidadesDTO, List<Especie> especiesDTO){
     
         Sprites sprites = new Sprites(
                 pokemonJSON.getSprites().other.home.getFront_default(),
@@ -65,6 +68,11 @@ public class PokemonMapper {
             
         }
         
+        Especie especie = especiesDTO.stream()
+            .filter(specie -> specie.getId() == pokemonJSON.getId())
+            .findFirst()
+            .orElse(null);
+        
         Pokemon pokemon =  new Pokemon(
                 pokemonJSON.getId(),
                 pokemonJSON.getName(),
@@ -85,7 +93,8 @@ public class PokemonMapper {
                 ,
                 sprites,
                 tipos,
-                habilidades
+                habilidades,
+                especie
                 );
     
         return pokemon;
@@ -198,6 +207,36 @@ public class PokemonMapper {
         
         return region;
     
+    }
+    
+    public Especie especieJSONToMl(EspecieJSON especieJSON){
+    
+        String descripcion = "";
+        NamedResourceJSON habitat = especieJSON.getHabitat();
+        
+        
+        for (FlavorTextJSON flavorText : especieJSON.getFlavor_text_entries()) {
+            
+            if ("es".equals(flavorText.getLanguage().getName())) {
+                
+                descripcion = flavorText.getFlavor_text();
+                break;
+                
+            }
+            
+        }
+        
+        Especie especie = new Especie(
+                especieJSON.getId(),
+                especieJSON.getBase_happiness(),
+                especieJSON.getColor().getName(),
+                (habitat == null) ? null : habitat.getName(),
+                descripcion,
+                especieJSON.getShape().getName()
+        );
+    
+        return especie;
+        
     }
     
     private String splitaerURI(String url){

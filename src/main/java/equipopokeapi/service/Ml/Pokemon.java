@@ -26,8 +26,9 @@ public class Pokemon {
     
     private List<Tipo> Tipos;
     private List<Habilidad> Habilidades;
+    private Especie Especie;
 
-    public Pokemon(Integer Id, String Nombre, Integer PuntosSalud, Integer Ataque, Integer Defensa, Integer AtaqueEspecial, Integer DefensaEspecial, Integer Velocidad, Integer Peso, Integer Altura, Integer ExperienciaBase, String Sonido, Generacion Generacion, Sprites Sprites, List<Tipo> Tipos, List<Habilidad> Habilidades) {
+    public Pokemon(Integer Id, String Nombre, Integer PuntosSalud, Integer Ataque, Integer Defensa, Integer AtaqueEspecial, Integer DefensaEspecial, Integer Velocidad, Integer Peso, Integer Altura, Integer ExperienciaBase, String Sonido, Generacion Generacion, Sprites Sprites, List<Tipo> Tipos, List<Habilidad> Habilidades, Especie Especie) {
         this.Id = Id;
         this.Nombre = Nombre;
         this.PuntosSalud = PuntosSalud;
@@ -44,8 +45,9 @@ public class Pokemon {
         this.Sprites = Sprites;
         this.Tipos = Tipos;
         this.Habilidades = Habilidades;
+        this.Especie = Especie;
     }
-    
+
     public Integer getId() {
         return Id;
     }
@@ -173,5 +175,15 @@ public class Pokemon {
     public void setHabilidades(List<Habilidad> Habilidades) {
         this.Habilidades = Habilidades;
     }
+
+    public Especie getEspecie() {
+        return Especie;
+    }
+
+    public void setEspecie(Especie Especie) {
+        this.Especie = Especie;
+    }
+
+    
 
 }

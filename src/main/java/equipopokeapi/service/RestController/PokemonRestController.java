@@ -11,21 +11,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  *
  * @author Alien 7
  */
 @RestController
-@RequestMapping("pokemon")
+@RequestMapping("pokeapi")
 public class PokemonRestController {
-    
-    private static String rutaBase = "https://pokeapi.co/api/v2/";
-    
-    @Autowired
-    private WebClient webClient;
     
     @Autowired
     private PokemonService pokemonService;
@@ -34,39 +29,56 @@ public class PokemonRestController {
     public ResponseEntity GetAll(){
         
         Result resultAll = new Result();
+            
+        resultAll = pokemonService.GetAll();
 
-        try {
-            
-            resultAll = pokemonService.GetAll();
-            
-            if (resultAll.correct) {
-                
-                if (resultAll.objects != null) {
-                    
-                    
-                    return ResponseEntity.ok(resultAll.objects.size());
-                    
-                } else {
-                
-                    return ResponseEntity.noContent().build();
-                    
-                }
-                
+        if (resultAll.correct) {
+
+            if (resultAll.objects != null) {
+
+
+                return ResponseEntity.ok(resultAll);
+
             } else {
-            
-                return ResponseEntity.internalServerError().body(resultAll);
-            
+
+                return ResponseEntity.noContent().build();
+
             }
-            
-        } catch (Exception ex) {
-            
-            resultAll.correct = false;
-            resultAll.errorMessage = ex.getLocalizedMessage();
-            
+
+        } else {
+
             return ResponseEntity.internalServerError().body(resultAll);
+
+        }
+        
+    }
+    
+    @GetMapping(params = "offset")
+    public ResponseEntity GetAll(@RequestParam Integer offset){
+    
+        Result resultOffset = new Result();
+        
+        if (pokemonService.checkPokemones()) {
+            
+            resultOffset.correct = false;
+            resultOffset.errorMessage = "No se han cargado los pokemones.";
+            
+            return ResponseEntity.internalServerError().body(resultOffset);
             
         }
         
+        resultOffset = pokemonService.GetAll(offset);
+        
+        if (resultOffset.correct) {
+            
+            return ResponseEntity.ok().body(resultOffset);
+            
+        } else {
+        
+            return ResponseEntity.notFound().build();
+        
+        }
+    
     }
     
     @GetMapping("/{IdPokemon}")
@@ -74,6 +86,15 @@ public class PokemonRestController {
     
         Result resultById = new Result();
             
+        if (pokemonService.checkPokemones()) {
+            
+            resultById.correct = false;
+            resultById.errorMessage = "No se han cargado los pokemones.";
+            
+            return ResponseEntity.internalServerError().body(resultById);
+            
+        }
+        
         resultById = pokemonService.GetById(IdPokemon);
 
         if (resultById.correct) {

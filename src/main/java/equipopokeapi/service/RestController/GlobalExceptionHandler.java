@@ -7,14 +7,14 @@ package equipopokeapi.service.RestController;
 import equipopokeapi.service.Ml.Result;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  *
  * @author Alien 7
  */
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
     
     @ExceptionHandler(Exception.class)
@@ -22,7 +22,8 @@ public class GlobalExceptionHandler {
     
         Result error = new Result();
         error.correct = false;
-        error.errorMessage = "Hubo un problema con el servidor.";
+        error.errorMessage = "Hubo un problema con el servidor: " + ex.getLocalizedMessage();
+        error.ex = ex;
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     
     }
