@@ -115,7 +115,11 @@ public class PokemonMapper {
         
         for (EffectEntrieJSON efectEntry : habilidadJSON.getEfectEntries()) {
             
-            efectosEntrada.add(efectEntry.effect);
+            if ("en".equals(efectEntry.getLanguage().getName())) {
+                
+                efectosEntrada.add(efectEntry.getEffect());
+                
+            }
             
         }
         
@@ -123,7 +127,11 @@ public class PokemonMapper {
             
             for (EffectEntrieJSON efectEntry : efectChanges.effectEntries) {
                 
-                efectosCambio.add(efectEntry.effect);
+                if ("en".equals(efectEntry.getLanguage().getName())) {
+                
+                    efectosCambio.add(efectEntry.getEffect());
+
+                }
                 
             }
             
