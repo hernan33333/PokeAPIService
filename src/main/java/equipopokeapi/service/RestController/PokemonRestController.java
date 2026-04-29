@@ -36,7 +36,6 @@ public class PokemonRestController {
 
             if (resultAll.objects != null) {
 
-
                 return ResponseEntity.ok(resultAll);
 
             } else {
@@ -107,6 +106,25 @@ public class PokemonRestController {
 
         }
 
+    }
+    
+    @GetMapping("/region")
+    public ResponseEntity GetAllRegiones(){
+    
+        Result resultRegiones = new Result();
+        
+        resultRegiones = pokemonService.GetRegiones();
+        
+        if (resultRegiones.correct) {
+            
+            return ResponseEntity.ok().body(resultRegiones);
+            
+        } else {
+        
+            return ResponseEntity.internalServerError().body(resultRegiones);
+        
+        }
+    
     }
     
 }
