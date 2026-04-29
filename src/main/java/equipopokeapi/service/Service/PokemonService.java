@@ -108,6 +108,25 @@ public class PokemonService {
     
     }
     
+    public Result GetRegiones(){
+    
+        Result resultRegion = new Result();
+        
+        if (regionesDTO.isEmpty()) {
+            
+            resultRegion.correct = false;
+            resultRegion.errorMessage = "No se han inicializado los valores de las regiones";
+            
+        } else {
+        
+            resultRegion.correct = true;
+            resultRegion.objects = new ArrayList<>(regionesDTO);
+        }
+        
+        return resultRegion;
+    
+    }
+    
     public boolean checkPokemones(){
     
         return pokemonesDTO.isEmpty();
