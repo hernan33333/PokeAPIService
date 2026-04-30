@@ -4,6 +4,7 @@
  */
 package equipopokeapi.service.Service;
 
+import equipopokeapi.service.DeserealizarJSON.EspecieJSON;
 import equipopokeapi.service.Ml.Especie;
 import equipopokeapi.service.Component.PokemonMapper;
 import equipopokeapi.service.DeserealizarJSON.RegionJSON;
