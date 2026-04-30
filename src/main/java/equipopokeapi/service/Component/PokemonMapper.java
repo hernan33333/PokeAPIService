@@ -22,8 +22,8 @@ import equipopokeapi.service.Ml.Pokemon;
 import equipopokeapi.service.Ml.Region;
 import equipopokeapi.service.Ml.Sprites;
 import equipopokeapi.service.Ml.Tipo;
-import equipopokeapi.service.Service.EspecieJSON;
-import equipopokeapi.service.Service.FlavorTextJSON;
+import equipopokeapi.service.DeserealizarJSON.EspecieJSON;
+import equipopokeapi.service.DeserealizarJSON.FlavorTextJSON;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -233,16 +233,23 @@ public class PokemonMapper {
         String descripcion = "";
         NamedResourceJSON habitat = especieJSON.getHabitat();
         
+        FlavorTextJSON descripcionEnEspaniol = especieJSON.getFlavor_text_entries().stream()
+                                        .filter(flavor -> Objects.equals(flavor.getLanguage().getName(), "es"))
+                                        .findFirst()
+                                        .orElse(null);
         
-        for (FlavorTextJSON flavorText : especieJSON.getFlavor_text_entries()) {
+        
+        if (descripcionEnEspaniol != null) {
             
-            if ("es".equals(flavorText.getLanguage().getName())) {
-                
-                descripcion = flavorText.getFlavor_text();
-                break;
-                
-            }
+            descripcion = descripcionEnEspaniol.getFlavor_text();
             
+        } else {
+        
+            descripcion = especieJSON.getFlavor_text_entries().stream()
+                            .filter(flavor -> Objects.equals(flavor.getLanguage().getName(), "en"))
+                            .findFirst()
+                            .orElse(new FlavorTextJSON("")).getFlavor_text();
+        
         }
         
         Especie especie = new Especie(

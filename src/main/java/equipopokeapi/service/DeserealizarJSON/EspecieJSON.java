@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package equipopokeapi.service.Service;
+package equipopokeapi.service.DeserealizarJSON;
 
+import equipopokeapi.service.DeserealizarJSON.FlavorTextJSON;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import equipopokeapi.service.DeserealizarJSON.NamedResourceJSON;
 import java.util.List;
