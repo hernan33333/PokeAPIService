@@ -17,6 +17,10 @@ public class Tipo {
 
     public Tipo() {
     }
+    
+    public Tipo(Integer Id){
+        this.Id = Id;
+    }
 
     public Tipo(Integer Id, String Nombre, Integer Generacion, List<Integer> Pokemones) {
         this.Id = Id;
