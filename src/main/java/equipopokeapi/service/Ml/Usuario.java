@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "usuario", uniqueConstraints = {
@@ -31,6 +32,14 @@ public class Usuario {
     private String contraseña;
     @Column(name = "correo")        
     private String correo;
+    @Column(name = "activo")
+    private boolean activo;
+    @Column(name = "activation_token")
+    private String ActivationToken;
+    @Column(name  = "reset_token")
+    private String ResetToken;
+    @Column(name = "reset_expiracion")
+    private LocalDateTime ResetExpiracion;
     
     @JoinColumn(name = "idrol")
     @ManyToOne
@@ -40,11 +49,15 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(Integer id_Usuario, String nombre, String contraseña, String correo, Rol rol) {
+    public Usuario(Integer id_Usuario, String nombre, String contraseña, String correo, boolean activo, String ActivationToken, String ResetToken, LocalDateTime ResetExpiracion, Rol rol) {
         this.id_Usuario = id_Usuario;
         this.nombre = nombre;
         this.contraseña = contraseña;
         this.correo = correo;
+        this.activo = activo;
+        this.ActivationToken = ActivationToken;
+        this.ResetToken = ResetToken;
+        this.ResetExpiracion = ResetExpiracion;
         this.rol = rol;
     }
 
@@ -87,6 +100,36 @@ public class Usuario {
     public void setRol(Rol rol) {
         this.rol = rol;
     }
-    
-    
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
+    public String getActivationToken() {
+        return ActivationToken;
+    }
+
+    public void setActivationToken(String ActivationToken) {
+        this.ActivationToken = ActivationToken;
+    }
+
+    public String getResetToken() {
+        return ResetToken;
+    }
+
+    public void setResetToken(String ResetToken) {
+        this.ResetToken = ResetToken;
+    }
+
+    public LocalDateTime getResetExpiracion() {
+        return ResetExpiracion;
+    }
+
+    public void setResetExpiracion(LocalDateTime ResetExpiracion) {
+        this.ResetExpiracion = ResetExpiracion;
+    }
 }

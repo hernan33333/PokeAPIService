@@ -11,7 +11,6 @@ import equipopokeapi.service.Ml.Usuario;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -147,9 +146,4 @@ public class UsuarioImplementación implements IUsuario{
         }
         return result;
     }
-    
-   
     }
-    
-
-
