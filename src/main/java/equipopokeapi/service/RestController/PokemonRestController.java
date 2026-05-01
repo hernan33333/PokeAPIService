@@ -108,6 +108,29 @@ public class PokemonRestController {
 
     }
     
+    @GetMapping("/buscar")
+    public ResponseEntity Busqueda(
+            @RequestParam(name = "Generacion", required = false) Integer GeneracionId,
+            @RequestParam(name ="Region", required = false) Integer RegionId,
+            @RequestParam(name = "Tipo", required = false) Integer TipoId,
+            @RequestParam(name = "offset", required = false) Integer Offset){
+        
+        Result resultBusqueda = new Result();
+        
+        resultBusqueda = pokemonService.Busqueda(GeneracionId, RegionId, TipoId, Offset);
+        
+        if (resultBusqueda.correct) {
+            
+            return ResponseEntity.ok().body(resultBusqueda);
+            
+        } else {
+        
+            return ResponseEntity.badRequest().body(resultBusqueda);
+        
+        }
+    
+    }
+    
     @GetMapping("/region")
     public ResponseEntity GetAllRegiones(){
     

@@ -84,10 +84,60 @@ public class PokemonService {
         Result resultOffset = new Result();
         
         resultOffset.correct = true;
-        resultOffset.objects = new ArrayList<>(pokemonesDTO.subList((offset <= 19 || offset > pokemonesDTO.size()) ? 0 : offset-19, (offset < 0 || offset > pokemonesDTO.size()) ? 0 : offset));
+        resultOffset.objects = new ArrayList<>(pokemonesDTO.subList((offset == null || offset < 19 || offset > pokemonesDTO.size()) ? 0 : offset-19, (offset < 0 || offset > pokemonesDTO.size()) ? 0 : offset));
         
         return resultOffset;
     
+    }
+    
+    public Result Busqueda(Integer generacionId, Integer regionId, Integer tipoId, Integer offset){
+    
+        Result resultBusqueda = new Result();
+        
+        if (generacionId.equals(null) && regionId.equals(null) && tipoId.equals(null)) {
+         
+            resultBusqueda.correct = false;
+            resultBusqueda.errorMessage = "No hay filtros plicados.";
+            
+            return resultBusqueda;
+            
+        }
+        
+        List<Pokemon> pokemonesFiltrados = pokemonesDTO.stream()
+                                                        .filter(pokemon -> generacionId == null || (pokemon.getGeneracion() == null) ? false : Objects.equals(pokemon.getGeneracion().getId(), generacionId))
+                                                        .filter(pokemon -> regionId == null || (pokemon.getGeneracion().getId() == null) ? false : Objects.equals(pokemon.getGeneracion().getRegion().getId(), regionId))
+                                                        .filter(pokemon -> tipoId == null || Objects.equals(pokemon.getTipos().stream()
+                                                                                                                                .filter(tipo -> tipo.getId() == tipoId)
+                                                                                                                                .findFirst()
+                                                                                                                                .orElse(new Tipo(-1)).getId(), tipoId)
+                                                        )
+                                                        .collect(Collectors.toList());
+        
+        
+        if (pokemonesFiltrados.isEmpty()) {
+            
+            resultBusqueda.correct = false;
+            resultBusqueda.errorMessage = "No hay coincidencias";
+            
+            return resultBusqueda;
+            
+        }
+        
+        resultBusqueda.correct = true;
+        resultBusqueda.objects = new ArrayList<>(paginarPokemones(offset, pokemonesFiltrados));
+        
+        return resultBusqueda;
+    
+    }
+    
+    private List<Pokemon> paginarPokemones(Integer offset, List<Pokemon> pokemonesFiltrados){
+        
+        if (pokemonesFiltrados.size() < 20) {
+            offset = pokemonesFiltrados.size();
+        }
+        
+        return pokemonesFiltrados.subList((offset == null || offset < 19 || offset > pokemonesFiltrados.size()) ? 0 : offset-19, (offset == null || offset < 0 || offset > pokemonesDTO.size()) ? 0 : offset);
+        
     }
     
     public Result GetById(Integer Id){
