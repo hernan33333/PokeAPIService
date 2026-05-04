@@ -17,46 +17,45 @@ import jakarta.persistence.UniqueConstraint;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "usuario", uniqueConstraints = {
+@Table(name = "USUARIO", uniqueConstraints = {
     @UniqueConstraint(name = "pk_idusuario", columnNames = {"IdUsuario"})
 })
 public class Usuario {
-    
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "idusuario")
     private  Integer id_Usuario;
     @Column(name= "nombre")
     private String nombre;
-    @Column(name ="contraseña")
-    private String contraseña;
+    @Column(name ="passwords")
+    private String password;
     @Column(name = "correo")        
     private String correo;
     @Column(name = "activo")
-    private boolean activo;
+    private Boolean activo;
     @Column(name = "activation_token")
-    private String ActivationToken;
+       private String activationToken;
+
     @Column(name  = "reset_token")
-    private String ResetToken;
+    private String resetToken;
     @Column(name = "reset_expiracion")
     private LocalDateTime ResetExpiracion;
     
-    @JoinColumn(name = "idrol")
     @ManyToOne
+    @JoinColumn(name ="idrol")
     private Rol rol;
-    
     
     public Usuario() {
     }
 
-    public Usuario(Integer id_Usuario, String nombre, String contraseña, String correo, boolean activo, String ActivationToken, String ResetToken, LocalDateTime ResetExpiracion, Rol rol) {
+    public Usuario(Integer id_Usuario, String nombre, String contraseña, String correo, Boolean activo, String activationToken, String ResetToken, LocalDateTime ResetExpiracion, Rol rol) {
         this.id_Usuario = id_Usuario;
         this.nombre = nombre;
-        this.contraseña = contraseña;
+        this.password = contraseña;
         this.correo = correo;
         this.activo = activo;
-        this.ActivationToken = ActivationToken;
-        this.ResetToken = ResetToken;
+        this.activationToken = activationToken;
+        this.resetToken = ResetToken;
         this.ResetExpiracion = ResetExpiracion;
         this.rol = rol;
     }
@@ -77,12 +76,12 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getPassword() {
+        return password;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getCorreo() {
@@ -101,28 +100,28 @@ public class Usuario {
         this.rol = rol;
     }
 
-    public boolean isActivo() {
+    public Boolean isActivo() {
         return activo;
     }
 
-    public void setActivo(boolean activo) {
+    public void setActivo(Boolean activo) {
         this.activo = activo;
     }
 
     public String getActivationToken() {
-        return ActivationToken;
+        return activationToken;
     }
 
-    public void setActivationToken(String ActivationToken) {
-        this.ActivationToken = ActivationToken;
+    public void setActivationToken(String activationToken) {
+        this.activationToken = activationToken;
     }
 
     public String getResetToken() {
-        return ResetToken;
+        return resetToken;
     }
 
     public void setResetToken(String ResetToken) {
-        this.ResetToken = ResetToken;
+        this.resetToken = ResetToken;
     }
 
     public LocalDateTime getResetExpiracion() {

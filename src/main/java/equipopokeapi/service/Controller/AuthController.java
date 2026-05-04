@@ -47,8 +47,4 @@ public class AuthController {
     public void reset(@RequestBody ResetPasswordRequest resetPassword){
         authService.restPassword(resetPassword);
     }
-            
-    
-    
-
 }

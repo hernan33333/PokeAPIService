@@ -20,10 +20,18 @@ public class CorreoService {
   
 public void enviar(String destino, String asunto, String contenido) {
 
-    System.out.println("===== CORREO SIMULADO =====");
-    System.out.println("Para: " + destino);
-    System.out.println("Asunto: " + asunto);
-    System.out.println("Contenido: " + contenido);
-}
+  MimeMessage mensaje = javaMailSender.createMimeMessage();
 
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(mensaje, true);
+            helper.setTo(destino);
+            helper.setSubject(asunto);
+            helper.setText(contenido, true);
+
+            javaMailSender.send(mensaje);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

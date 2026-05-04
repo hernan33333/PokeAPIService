@@ -89,7 +89,7 @@ public class UsuarioImplementación implements IUsuario{
                 
                 usuariob.setNombre(usuario.getNombre());
                 usuariob.setCorreo(usuario.getCorreo());
-                usuariob.setContraseña(usuario.getContraseña());
+                usuariob.setPassword(usuario.getPassword());
                 usuariob.setRol(usuario.getRol());    
                  entitimanager.merge(usuariob);
 

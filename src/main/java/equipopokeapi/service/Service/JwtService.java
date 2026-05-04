@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class JwtService {
-    private final String SecretKey = "jbdiuwjmxo90oioñkmdsmom=JHIBJ";
+    private final String SecretKey = "jbdiuwoklmlmslzmxo90oiokmdsomJhfbdsjknpoPPHIBJlpij";
     
   public String generateToken(String email) {
      return Jwts.builder()

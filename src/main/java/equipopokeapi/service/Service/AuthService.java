@@ -26,8 +26,8 @@ public class AuthService {
     @Autowired
     private CorreoService correoService;
     
- public void register(Usuario usuario){
-     usuario.setContraseña(passwordEncoder.encode(usuario.getContraseña()));
+    public void register(Usuario usuario){
+     usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
      usuario.setActivo(false);
      
      String token =     UUID.randomUUID().toString();
@@ -49,7 +49,7 @@ public class AuthService {
  public String login(LoginRequest request){
      Usuario usuario = usuarioRepository.findByCorreo(request.getCorreo());
      
-     if(!passwordEncoder.matches(request.getContraseña(), usuario.getContraseña()) ){
+     if(!passwordEncoder.matches(request.getContraseña(), usuario.getPassword()) ){
          throw new RuntimeException("Credenciales invalidas");
      }
      if(!usuario .isActivo()){
@@ -61,8 +61,9 @@ public class AuthService {
      Usuario usuario = usuarioRepository.findByCorreo(correo);
      String token =  UUID.randomUUID().toString();
      
-     usuario.setResetToken(token);
-     usuario.setResetExpiracion(LocalDateTime.MIN.plusMinutes(15));
+usuario.setResetToken(UUID.randomUUID().toString());
+usuario.setResetExpiracion(LocalDateTime.now().plusMinutes(15)); 
+
      
      usuarioRepository.save(usuario);
      
@@ -76,7 +77,7 @@ public class AuthService {
      if (usuari.getResetExpiracion().isBefore(LocalDateTime.now())){
          throw new RuntimeException("Token expirado");
      }
-     usuari .setContraseña(passwordEncoder.encode(resetpassword.getNewPassword()));
+     usuari .setPassword(passwordEncoder.encode(resetpassword.getNewPassword()));
      usuari.setResetToken(null);
      usuari.setResetExpiracion(null);
      
