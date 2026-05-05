@@ -59,18 +59,24 @@ public class AuthService {
  }
  public void forgotPassword(String correo){
      Usuario usuario = usuarioRepository.findByCorreo(correo);
-     String token =  UUID.randomUUID().toString();
-     
-usuario.setResetToken(UUID.randomUUID().toString());
-usuario.setResetExpiracion(LocalDateTime.now().plusMinutes(15)); 
+         if (usuario == null) {
+        throw new RuntimeException("Usuario no encontrado");
+    }
+    String token = UUID.randomUUID().toString();
+    usuario.setResetToken(token);
+    usuario.setResetExpiracion(LocalDateTime.now().plusMinutes(15));
 
-     
-     usuarioRepository.save(usuario);
-     
-       String link = "http://localhost:4200/reset-password?token=" + token;
-      
-       correoService.enviar(correo, "Recuperar contraseña", "<a href='" + link + "'>Restablecer contraseña</a>");
- }
+    usuarioRepository.save(usuario);     
+    
+            String link = "http://localhost:4200/reset-password?token=" + token;
+
+            correoService.enviar(
+                correo,
+                "Recuperar contraseña",
+                "<a href='" + link + "'>Restablecer contraseña</a>"
+        );
+} 
+
  public void  restPassword(ResetPasswordRequest resetpassword){
      Usuario usuari = usuarioRepository.findByResetToken(resetpassword.getToken());
      
