@@ -9,7 +9,12 @@ import equipopokeapi.service.Ml.LoginRequest;
 import equipopokeapi.service.Ml.ResetPasswordRequest;
 import equipopokeapi.service.Ml.Usuario;
 import equipopokeapi.service.Service.AuthService;
+import equipopokeapi.service.Service.JwtService;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,11 +38,14 @@ public class AuthController {
         authService.activarCuenta(token);
     }
     
-    @PostMapping("/login")
-    public void login(@RequestBody LoginRequest login){
-        authService.login(login);
-    }
-    
+   @PostMapping("/login")
+public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+
+    String token = authService.login(request);
+
+    return ResponseEntity.ok(Map.of("token", token)); 
+}
+   
     @PostMapping("/forgot-password")
     public void forgot(@RequestParam String correo){
         authService.forgotPassword(correo);
