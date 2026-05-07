@@ -35,27 +35,33 @@ public class AuthService {
      
      usuarioRepository.save(usuario);
      
-     String link = "http://localhost:4200/activate?token="+ token;
+     String link = "http://192.167.1.49:4200/activate?token="+ token;
      
-     correoService.enviar(usuario.getCorreo(), "Activar Cuenta", "<a href='" + link + "'>Activar cuenta</a>");
+     correoService.enviar(usuario.getCorreo(), "Activar cuenta ", "<h1>Bienbenid@,  "+usuario.getNombre()+"</h1>"+"<p>Para nosotros es un placer que te unas a nuestra comunidad, "
+             + "para poder verivicar tu cuenta presiona</p>"+"<a href='" + link + "'>Activar cuenta</a>"+"<p>esperamos esta plataforma sea de tu agrado!!!</p>");
  }   
- public void activarCuenta(String token){
-     Usuario usuario = usuarioRepository.findByActivationToken(token);
-     usuario.setActivo(true);
-     usuario.setActivationToken(null);
-     usuarioRepository.save(usuario);
- }
- 
+ public String activarCuenta(String token) {
+
+    Usuario usuario = usuarioRepository.findByActivationToken(token);
+
+    if(usuario == null){
+        throw new RuntimeException("Token inválido");
+    }
+    usuario.setActivo(true);
+    usuario.setActivationToken(null);
+    usuarioRepository.save(usuario);
+    return jwtService.generateToken(usuario.getCorreo(), Integer.SIZE);
+}
  public String login(LoginRequest request){
      Usuario usuario = usuarioRepository.findByCorreo(request.getCorreo());
      
-     if(!passwordEncoder.matches(request.getContraseña(), usuario.getPassword()) ){
+      if(!passwordEncoder.matches(request.getContraseña(), usuario.getPassword()) ){
          throw new RuntimeException("Credenciales invalidas");
      }
      if(!usuario .isActivo()){
          throw new RuntimeException("Cuenta no activa");
      }
-     return jwtService.generateToken(usuario.getCorreo());
+     return jwtService.generateToken(usuario.getCorreo(), Integer.SIZE);
  }
  public void forgotPassword(String correo){
      Usuario usuario = usuarioRepository.findByCorreo(correo);
@@ -76,7 +82,6 @@ public class AuthService {
                 "<a href='" + link + "'>Restablecer contraseña</a>"
         );
 } 
-
  public void  restPassword(ResetPasswordRequest resetpassword){
      Usuario usuari = usuarioRepository.findByResetToken(resetpassword.getToken());
      
@@ -86,7 +91,7 @@ public class AuthService {
      usuari .setPassword(passwordEncoder.encode(resetpassword.getNewPassword()));
      usuari.setResetToken(null);
      usuari.setResetExpiracion(null);
-     
+    
      usuarioRepository.save(usuari);
  }
 }

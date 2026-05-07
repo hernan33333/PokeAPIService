@@ -62,5 +62,4 @@ private Claims extractAllClaims(String token) {
             .parseClaimsJws(token)
             .getBody();
 }
-
 }
