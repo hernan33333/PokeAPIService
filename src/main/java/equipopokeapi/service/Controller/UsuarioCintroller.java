@@ -1,8 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 package equipopokeapi.service.Controller;
 
 import equipopokeapi.service.DAO.UsuarioImplementación;
@@ -109,4 +104,5 @@ public class UsuarioCintroller {
         Result result= usuarioImplementacion.Delete(idUsuario);
      return result.correct  ?ResponseEntity.ok(result): ResponseEntity.badRequest().body(result);  
     }
+    
 }
