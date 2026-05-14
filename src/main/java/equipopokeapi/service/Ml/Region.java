@@ -7,8 +7,9 @@ package equipopokeapi.service.Ml;
 
 
 public class Region {
-    private int IdRegion;
+    private     Integer IdRegion;
     private String Nombre;
+    private Integer Generacion;
 
     public Region() {
     }
@@ -16,13 +17,21 @@ public class Region {
     public Region(int IdRegion, String Nombre) {
         this.IdRegion = IdRegion;
         this.Nombre = Nombre;
+       
     }
 
-    public int getIdRegion() {
+    public Region(Integer IdRegion, String Nombre, Integer Generacion) {
+        this.IdRegion = IdRegion;
+        this.Nombre = Nombre;
+        this.Generacion = Generacion;
+    }
+    
+
+    public Integer getIdRegion() {
         return IdRegion;
     }
 
-    public void setIdRegion(int IdRegion) {
+    public void setIdRegion(Integer IdRegion) {
         this.IdRegion = IdRegion;
     }
 
@@ -33,6 +42,15 @@ public class Region {
     public void setNombre(String Nombre) {
         this.Nombre = Nombre;
     }
+
+    public Integer getGeneracion() {
+        return Generacion;
+    }
+
+    public void setGeneracion(Integer Generacion) {
+        this.Generacion = Generacion;
+    }
+    
     
     
 

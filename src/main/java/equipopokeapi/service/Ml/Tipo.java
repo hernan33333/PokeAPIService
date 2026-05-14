@@ -5,25 +5,51 @@
 
 package equipopokeapi.service.Ml;
 
+import java.util.List;
+
 
 public class Tipo {
-    private int IdTipo;
+      private Integer Id;
     private String Nombre;
+    private Integer Generacion;
+    private List<Integer> Pokemones;
 
     public Tipo() {
     }
+    
+    public Tipo(Integer Id){
+        this.Id = Id;
+    }
 
-    public Tipo(int IdTipo, String Nombre) {
-        this.IdTipo = IdTipo;
+    public Tipo(Integer Id, String Nombre, Integer Generacion, List<Integer> Pokemones) {
+        this.Id = Id;
         this.Nombre = Nombre;
+        this.Generacion = Generacion;
+        this.Pokemones = Pokemones;
     }
 
-    public int getIdTipo() {
-        return IdTipo;
+    public Integer getGeneracion() {
+        return Generacion;
     }
 
-    public void setIdTipo(int IdTipo) {
-        this.IdTipo = IdTipo;
+    public void setGeneracion(Integer Generacion) {
+        this.Generacion = Generacion;
+    }
+
+    public List<Integer> getPokemones() {
+        return Pokemones;
+    }
+
+    public void setPokemones(List<Integer> Pokemones) {
+        this.Pokemones = Pokemones;
+    }
+
+    public Integer getId() {
+        return Id;
+    }
+
+    public void setId(Integer Id) {
+        this.Id = Id;
     }
 
     public String getNombre() {
@@ -33,7 +59,4 @@ public class Tipo {
     public void setNombre(String Nombre) {
         this.Nombre = Nombre;
     }
-    
-    
-
 }

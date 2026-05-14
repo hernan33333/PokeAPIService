@@ -3,21 +3,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-package equipopokeapi.service.Ml;
+package equipopokeapi.service.DeserealizarJSON;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
-public class Sprites {
-    private String front_default;
-    private String front_female;
+public class HomeSpritesJSON {
+    @JsonProperty("front_default")
+    private String front_default; 
+    
+    @JsonProperty("front_female")
+    private String front_female; 
+    
+    @JsonProperty("front_shiny")
     private String front_shiny; 
-    private String front_shiny_female;
-
-    public Sprites(String front_default, String front_female, String front_shiny, String front_shiny_female) {
-        this.front_default = front_default;
-        this.front_female = front_female;
-        this.front_shiny = front_shiny;
-        this.front_shiny_female = front_shiny_female;
-    }
+    
+    @JsonProperty("front_shiny_female")
+    private String front_shiny_female; 
 
     public String getFront_default() {
         return front_default;

@@ -9,18 +9,11 @@ import equipopokeapi.service.Ml.LoginRequest;
 import equipopokeapi.service.Ml.ResetPasswordRequest;
 import equipopokeapi.service.Ml.Result;
 import equipopokeapi.service.Ml.Usuario;
-import equipopokeapi.service.Repository.UsuarioRepository;
 import equipopokeapi.service.Service.AuthService;
-import equipopokeapi.service.Service.JwtService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(origins = "http://localhost:8080")
 public class AuthController {
     @Autowired
     private AuthService authService;

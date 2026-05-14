@@ -5,32 +5,34 @@
 
 package equipopokeapi.service.Ml;
 
+import java.util.List;
+
 
 public class Pokemon {
-    private int IdPokemon;
+   private Integer Id;
     private String Nombre;
-    private String PuntosSalud;
-    private String Ataque;
-    private String Defensa;
-    private String AtaqueEspecial;
-    private String DefensaEspecial;
-    private String Velocidad;
-    private String Peso;
-    private String ExperienciaBase;
+    private Integer PuntosSalud;
+    private Integer Ataque;
+    private Integer Defensa;
+    private Integer AtaqueEspecial;
+    private Integer DefensaEspecial;
+    private Integer Velocidad;
+    private Integer Peso;
+    private Integer Altura;
+    private Integer ExperienciaBase;
     private String Sonido;
+    private Generacion Generacion;
+    private Sprites Sprites;
     
-    private Tipo tipo;
-    
-    private Region region;
-    
-    private Habilidad habilidad;
+    private List<Tipo> Tipos;
+    private List<Habilidad> Habilidades;
+    private Especie Especie;
 
     public Pokemon() {
     }
 
-    public Pokemon(int IdPokemon, String Nombre, String PuntosSalud, String Ataque, String Defensa, String AtaqueEspecial, String DefensaEspecial, String Velocidad, String Peso, 
-            String ExperienciaBase, String Sonido,  Tipo tipo, Region region, Habilidad habilidad) {
-        this.IdPokemon = IdPokemon;
+    public Pokemon(Integer Id, String Nombre, Integer PuntosSalud, Integer Ataque, Integer Defensa, Integer AtaqueEspecial, Integer DefensaEspecial, Integer Velocidad, Integer Peso, Integer Altura, Integer ExperienciaBase, String Sonido, Generacion Generacion, Sprites Sprites, List<Tipo> Tipos, List<Habilidad> Habilidades, Especie Especie) {
+        this.Id = Id;
         this.Nombre = Nombre;
         this.PuntosSalud = PuntosSalud;
         this.Ataque = Ataque;
@@ -39,18 +41,22 @@ public class Pokemon {
         this.DefensaEspecial = DefensaEspecial;
         this.Velocidad = Velocidad;
         this.Peso = Peso;
+        this.Altura = Altura;
         this.ExperienciaBase = ExperienciaBase;
         this.Sonido = Sonido;
-        this.tipo = tipo;
-        this.habilidad = habilidad;
+        this.Generacion = Generacion;
+        this.Sprites = Sprites;
+        this.Tipos = Tipos;
+        this.Habilidades = Habilidades;
+        this.Especie = Especie;
     }
 
-    public int getIdPokemon() {
-        return IdPokemon;
+    public Integer getId() {
+        return Id;
     }
 
-    public void setIdPokemon(int IdPokemon) {
-        this.IdPokemon = IdPokemon;
+    public void setId(Integer Id) {
+        this.Id = Id;
     }
 
     public String getNombre() {
@@ -61,67 +67,75 @@ public class Pokemon {
         this.Nombre = Nombre;
     }
 
-    public String getPuntosSalud() {
+    public Integer getPuntosSalud() {
         return PuntosSalud;
     }
 
-    public void setPuntosSalud(String PuntosSalud) {
+    public void setPuntosSalud(Integer PuntosSalud) {
         this.PuntosSalud = PuntosSalud;
     }
 
-    public String getAtaque() {
+    public Integer getAtaque() {
         return Ataque;
     }
 
-    public void setAtaque(String Ataque) {
+    public void setAtaque(Integer Ataque) {
         this.Ataque = Ataque;
     }
 
-    public String getDefensa() {
+    public Integer getDefensa() {
         return Defensa;
     }
 
-    public void setDefensa(String Defensa) {
+    public void setDefensa(Integer Defensa) {
         this.Defensa = Defensa;
     }
 
-    public String getAtaqueEspecial() {
+    public Integer getAtaqueEspecial() {
         return AtaqueEspecial;
     }
 
-    public void setAtaqueEspecial(String AtaqueEspecial) {
+    public void setAtaqueEspecial(Integer AtaqueEspecial) {
         this.AtaqueEspecial = AtaqueEspecial;
     }
 
-    public String getDefensaEspecial() {
+    public Integer getDefensaEspecial() {
         return DefensaEspecial;
     }
 
-    public void setDefensaEspecial(String DefensaEspecial) {
+    public void setDefensaEspecial(Integer DefensaEspecial) {
         this.DefensaEspecial = DefensaEspecial;
     }
 
-    public String getVelocidad() {
+    public Integer getVelocidad() {
         return Velocidad;
     }
 
-    public void setVelocidad(String Velocidad) {
+    public void setVelocidad(Integer Velocidad) {
         this.Velocidad = Velocidad;
     }
 
-    public String getPeso() {
+    public Integer getPeso() {
         return Peso;
     }
 
-    public void setPeso(String Peso) {
+    public void setPeso(Integer Peso) {
         this.Peso = Peso;
     }
 
-    public String getExperienciaBase() {
+    public Integer getAltura() {
+        return Altura;
+    }
+
+    public void setAltura(Integer Altura) {
+        this.Altura = Altura;
+    }
+
+    public Integer getExperienciaBase() {
         return ExperienciaBase;
     }
 
-    public void setExperienciaBase(String ExperienciaBase) {
+    public void setExperienciaBase(Integer ExperienciaBase) {
         this.ExperienciaBase = ExperienciaBase;
     }
 
@@ -133,30 +147,45 @@ public class Pokemon {
         this.Sonido = Sonido;
     }
 
-    public Tipo getTipo() {
-        return tipo;
+    public Generacion getGeneracion() {
+        return Generacion;
     }
 
-    public void setTipo(Tipo tipo) {
-        this.tipo = tipo;
+    public void setGeneracion(Generacion Generacion) {
+        this.Generacion = Generacion;
     }
 
-    public Region getRegion() {
-        return region;
+    public Sprites getSprites() {
+        return Sprites;
     }
 
-    public void setRegion(Region region) {
-        this.region = region;
+    public void setSprites(Sprites Sprites) {
+        this.Sprites = Sprites;
     }
 
-    public Habilidad getHabilidad() {
-        return habilidad;
+    public List<Tipo> getTipos() {
+        return Tipos;
     }
 
-    public void setHabilidad(Habilidad habilidad) {
-        this.habilidad = habilidad;
+    public void setTipos(List<Tipo> Tipos) {
+        this.Tipos = Tipos;
     }
+
+    public List<Habilidad> getHabilidades() {
+        return Habilidades;
+    }
+
+    public void setHabilidades(List<Habilidad> Habilidades) {
+        this.Habilidades = Habilidades;
+    }
+
+    public Especie getEspecie() {
+        return Especie;
+    }
+
+    public void setEspecie(Especie Especie) {
+        this.Especie = Especie;
+    }
+
     
-    
-
-}
+    }

@@ -35,7 +35,7 @@ public class AuthService {
      
      usuarioRepository.save(usuario);
      
-     String link = "http://192.167.1.49:4200/activate?token="+ token;
+     String link = "http://localhost:4200/activate?token="+ token;
      
      correoService.enviar(usuario.getCorreo(), "Activar cuenta ", "<h1>Bienbenid@,  "+usuario.getNombre()+"</h1>"+"<p>Para nosotros es un placer que te unas a nuestra comunidad, "
              + "para poder verivicar tu cuenta presiona</p>"+"<a href='" + link + "'>Activar cuenta</a>"+"<p>esperamos esta plataforma sea de tu agrado!!!</p>");
