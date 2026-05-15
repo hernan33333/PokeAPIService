@@ -16,6 +16,10 @@ public interface IUsuario {
     Result Update(Usuario usuario);
     Result GetById(Integer Id_Usuario);
     Result Delete(Integer idUsuario);
+    
+    Result GetByUsername(String Username);
+    
+    Result GetByCorreo(String Correo);
             
 
 }

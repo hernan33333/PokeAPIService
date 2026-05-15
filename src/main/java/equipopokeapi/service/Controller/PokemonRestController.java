@@ -5,16 +5,22 @@
 
 package equipopokeapi.service.Controller;
 
+import equipopokeapi.service.DAO.PokemonDAOImplementation;
 import equipopokeapi.service.Ml.Pokemon;
+import equipopokeapi.service.Ml.PokemonDTO;
 import equipopokeapi.service.Ml.Result;
 import equipopokeapi.service.Service.PokemonService;
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -28,6 +34,9 @@ public class PokemonRestController {
  
     @Autowired
     private PokemonService pokemonService;
+    
+    @Autowired
+    private PokemonDAOImplementation pokemonDAOImplementation;
 
     @GetMapping
     @PreAuthorize("hasAnyRole('SuperMaestroPokemon', 'MaestroPokemon')")
@@ -186,4 +195,88 @@ public class PokemonRestController {
         }
 
     }
+    
+    @GetMapping("/favoritos/{IdUsuario}")
+    @PreAuthorize("hasAnyRole('SuperMaestroPokemon', 'MaestroPokemon')")
+    public ResponseEntity GetFavoritos(@PathVariable("IdUsuario") int IdUsuario){
+        
+        Result Resultado = pokemonDAOImplementation.ObtenerFavoritos(IdUsuario);
+        
+        if(Resultado.correct){
+            
+            if(Resultado.objects.isEmpty()){
+                return ResponseEntity.noContent().build();
+            }
+            
+            Result result = new Result();
+            result.objects = new ArrayList<>();
+            
+            for(Object pokemon: Resultado.objects){
+                
+                PokemonDTO Pokemon = (PokemonDTO)pokemon;
+                result.objects.add(pokemonService.GetById(Pokemon.getIdPokemon()));
+                
+            }
+            result.correct = true;
+            return ResponseEntity.ok(result);
+            
+            
+        }else{
+            
+            
+           return ResponseEntity.badRequest().body(Resultado);
+           
+           
+        }
+    }
+    
+    @GetMapping("/favoritos")
+    @PreAuthorize("hasAnyRole('SuperMaestroPokemon', 'MaestroPokemon')")
+    public ResponseEntity GetAllFavoritos(){
+        Result Resultado = pokemonDAOImplementation.GetAllFavoritos();
+        
+        if(Resultado.correct){
+            
+            if(Resultado.objects.isEmpty()){
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(Resultado);
+        }else{
+            
+            return ResponseEntity.badRequest().body(Resultado);
+            
+        }
+    }
+    
+    @PostMapping("/favoritos/{IdUsuario}")
+    @PreAuthorize("hasAnyRole('SuperMaestroPokemon', 'MaestroPokemon')")
+    public ResponseEntity AddFavorito(@PathVariable("IdUsuario") int IdUsuario, @RequestBody PokemonDTO pokemon){
+        
+        Result Resultado = pokemonDAOImplementation.AgregarFavorito(IdUsuario, pokemon);
+        
+        if(Resultado.correct){
+            return ResponseEntity.ok(Resultado);
+        }
+        
+        return ResponseEntity.badRequest().body(Resultado);
+    }
+    
+    
+    @DeleteMapping("/favoritos/{IdUsuario}/{IdPokemon}")
+    @PreAuthorize("hasAnyRole('SuperMaestroPokemon', 'MaestroPokemon')")
+    public ResponseEntity DeleteFavorito(@PathVariable("IdUsuario") int IdUsuario, @PathVariable("IdPokemon") int IdPokemon){
+        
+        Result Resultado = pokemonDAOImplementation.EliminarFavorito(IdUsuario, IdPokemon);
+        
+        if(Resultado.correct){
+            
+            return ResponseEntity.ok(Resultado);
+            
+        }
+        
+        return ResponseEntity.badRequest().body(Resultado);
+        
+        
+    }
+        
 }

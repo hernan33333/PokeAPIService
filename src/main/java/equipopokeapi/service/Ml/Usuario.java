@@ -1,8 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 package equipopokeapi.service.Ml;
 
 import jakarta.persistence.Column;
@@ -11,10 +6,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "USUARIO", uniqueConstraints = {
@@ -44,6 +42,19 @@ public class Usuario {
     @ManyToOne
     @JoinColumn(name ="idrol")
     private Rol rol;
+    
+    @ManyToMany
+    @JoinTable(
+      name = "favorito", 
+      joinColumns = @JoinColumn(name = "idusuario"), 
+      inverseJoinColumns = @JoinColumn(name = "idpokemon")
+    )
+    public List<PokemonDTO> Favoritos;
+    
+    public void removeObjeto(PokemonDTO objeto) {
+        this.Favoritos.remove(objeto);
+        objeto.Usuarios.remove(this);
+    }
     
     public Usuario() {
     }

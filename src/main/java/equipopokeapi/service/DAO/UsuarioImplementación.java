@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package equipopokeapi.service.DAO;
 
 import equipopokeapi.service.Ml.Result;
@@ -17,28 +16,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 
-
 @Repository
-public class UsuarioImplementación implements IUsuario{
-    
+public class UsuarioImplementación implements IUsuario {
+
     @Autowired
     private EntityManager entitimanager;
 
-
-
     @Override
-  @Transactional
+    @Transactional
     public Result Add(Usuario usuario) {
         Result result = new Result();
-        try{
+        try {
             entitimanager.persist(usuario);
             result.correct = true;
-            
-            
-        }catch(Exception ex){
-            result.correct= false;
+
+        } catch (Exception ex) {
+            result.correct = false;
             result.errorMessage = ex.getLocalizedMessage();
-            result.ex= ex;
+            result.ex = ex;
         }
         return result;
     }
@@ -46,14 +41,14 @@ public class UsuarioImplementación implements IUsuario{
     @Override
     public Result Get() {
         Result result = new Result();
-        try{
+        try {
             TypedQuery<Usuario> queryUsuario = entitimanager.createQuery("FROM Usuario", Usuario.class);
             List<Usuario> usuarios = queryUsuario.getResultList();
             result.objects = new ArrayList<>(usuarios);
-            
+
             result.correct = true;
-            
-        }catch(Exception ex){
+
+        } catch (Exception ex) {
             result.correct = false;
             result.errorMessage = ex.getLocalizedMessage();
             result.ex = ex;
@@ -63,15 +58,15 @@ public class UsuarioImplementación implements IUsuario{
 
     @Override
     public Result GetRol() {
-           Result result = new Result();
-        try{
+        Result result = new Result();
+        try {
             TypedQuery<Rol> queryUsuario = entitimanager.createQuery("FROM Rol", Rol.class);
             List<Rol> usuarios = queryUsuario.getResultList();
             result.objects = new ArrayList<>(usuarios);
-            
+
             result.correct = true;
-            
-        }catch(Exception ex){
+
+        } catch (Exception ex) {
             result.correct = false;
             result.errorMessage = ex.getLocalizedMessage();
             result.ex = ex;
@@ -82,24 +77,24 @@ public class UsuarioImplementación implements IUsuario{
     @Override
     @Transactional
     public Result Update(Usuario usuario) {
-        Result result= new Result();
-        try{
-            Usuario usuariob = entitimanager.find(Usuario.class,  usuario.getIdUsuario());
-            if(usuariob != null){
-                
+        Result result = new Result();
+        try {
+            Usuario usuariob = entitimanager.find(Usuario.class, usuario.getIdUsuario());
+            if (usuariob != null) {
+
                 usuariob.setNombre(usuario.getNombre());
                 usuariob.setCorreo(usuario.getCorreo());
                 usuariob.setPassword(usuario.getPassword());
-                usuariob.setRol(usuario.getRol());    
-                 entitimanager.merge(usuariob);
+                usuariob.setRol(usuario.getRol());
+                entitimanager.merge(usuariob);
 
-            result.correct = true;
+                result.correct = true;
             }
-        }catch(Exception ex){
-           result.correct = false;
-           result.errorMessage = ex.getLocalizedMessage();
-           result.ex = ex;
-            
+        } catch (Exception ex) {
+            result.correct = false;
+            result.errorMessage = ex.getLocalizedMessage();
+            result.ex = ex;
+
         }
         return result;
     }
@@ -107,17 +102,17 @@ public class UsuarioImplementación implements IUsuario{
     @Override
     public Result GetById(Integer Id_Usuario) {
         Result result = new Result();
-        try{
+        try {
             Usuario usuario = entitimanager.find(Usuario.class, Id_Usuario);
-            if(usuario != null){
-                result.object= usuario;
+            if (usuario != null) {
+                result.object = usuario;
                 result.correct = true;
-            }else{
+            } else {
                 result.correct = false;
                 result.errorMessage = ("Usuario no encontrado");
             }
-            
-        }catch(Exception ex){
+
+        } catch (Exception ex) {
             result.correct = false;
             result.errorMessage = ex.getLocalizedMessage();
             result.ex = ex;
@@ -129,21 +124,67 @@ public class UsuarioImplementación implements IUsuario{
     @Transactional
     public Result Delete(Integer idUsuario) {
         Result result = new Result();
-        try{
+        try {
             Usuario usuario = entitimanager.find(Usuario.class, idUsuario);
-            
-            if(usuario != null){
+
+            if (usuario != null) {
                 entitimanager.remove(usuario);
-                    result.correct = true;
-            }else{
-                    result.correct = false;
-                    result.errorMessage = ("Usuario no encontrado");
+                result.correct = true;
+            } else {
+                result.correct = false;
+                result.errorMessage = ("Usuario no encontrado");
             }
-        }catch(Exception ex){
-          result.correct = false;
-          result.errorMessage = ex.getLocalizedMessage();
-          result.ex = ex;
+        } catch (Exception ex) {
+            result.correct = false;
+            result.errorMessage = ex.getLocalizedMessage();
+            result.ex = ex;
         }
         return result;
     }
+
+    @Override
+    public Result GetByUsername(String Username) {
+        Result result = new Result();
+
+        try {
+            
+            Usuario usuario = entitimanager.createQuery("SELECT u FROM Usuario u WHERE u.nombre = :user"
+                    , Usuario.class)
+                    .setParameter("user", Username)
+                    .getSingleResult();
+            result.object = usuario;
+            result.correct = true;
+        } catch (Exception ex) {
+            result.correct = false;
+            result.errorMessage = ex.getLocalizedMessage();
+            result.ex = ex;
+        }
+
+        return result;
     }
+
+    @Override
+    public Result GetByCorreo(String Correo) {
+        Result result = new Result();
+        
+        try {
+            Usuario usuario = entitimanager.createQuery("SELECT u FROM Usuario u WHERE u.correo = :user"
+                    , Usuario.class)
+                    .setParameter("user", Correo)
+                    .getSingleResult();
+            result.object = usuario;
+            result.correct = true;
+            
+            
+        } catch (Exception ex) {
+            result.correct = false;
+            result.errorMessage = ex.getLocalizedMessage();
+            result.ex = ex;
+        }
+        
+        
+        return result;
+    }
+    
+    
+}
