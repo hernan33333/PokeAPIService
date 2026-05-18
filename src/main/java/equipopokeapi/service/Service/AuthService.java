@@ -19,6 +19,7 @@ public class AuthService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired

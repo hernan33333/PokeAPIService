@@ -229,7 +229,7 @@ public class PokemonRestController {
            
         }
     }
-    
+
     @GetMapping("/favoritos")
     @PreAuthorize("hasAnyRole('SuperMaestroPokemon', 'MaestroPokemon')")
     public ResponseEntity GetAllFavoritos(){

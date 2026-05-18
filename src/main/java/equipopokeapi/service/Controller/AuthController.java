@@ -9,9 +9,11 @@ import equipopokeapi.service.Ml.LoginRequest;
 import equipopokeapi.service.Ml.ResetPasswordRequest;
 import equipopokeapi.service.Ml.Result;
 import equipopokeapi.service.Ml.Usuario;
+import equipopokeapi.service.Repository.UsuarioRepository;
 import equipopokeapi.service.Service.AuthService;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,6 +32,9 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
+    
+    @Autowired
+    private UsuarioRepository usuarioRepository;
     
     @Autowired
     private UsuarioImplementación usuarioImplementation;
@@ -56,7 +61,10 @@ public class AuthController {
         Result result = new Result();
         try {
             String jwt = authService.activarCuenta(token);
-            result.object = jwt;
+            Usuario usuario = usuarioRepository.findByResetToken(token);
+            result.errorMessage = jwt;
+            result.object = usuario;
+            
             result.correct = true;
 
         } catch (Exception ex) {
@@ -74,9 +82,14 @@ public class AuthController {
         try {
 
             String token = authService.login(request);
-            result.object = token;
+                  
+            Usuario usuario = (Usuario)usuarioImplementation.GetByCorreo(request.getCorreo()).object;
+            
+            result.errorMessage = token;
+            result.object = usuario;
+            
             result.correct = true;
-        } catch (Exception ex) {
+        } catch (Exception ex) { 
             result.correct = false;
             result.errorMessage = ex.getLocalizedMessage();
             result.ex = ex;
@@ -130,7 +143,6 @@ public class AuthController {
         return ResponseEntity.badRequest().body(Resultado);
     }
     
-    
     @PostMapping("/comprobarCorreo/{correo}")
     public ResponseEntity ConsultarCorreo(@PathVariable("correo") String Correo){
         
@@ -143,4 +155,8 @@ public class AuthController {
         return ResponseEntity.badRequest().body(Resultado);
     }
 
+    @GetMapping("/error")
+    public ResponseEntity ImApot(){
+        return ResponseEntity.status(418).build();
+    }
 }

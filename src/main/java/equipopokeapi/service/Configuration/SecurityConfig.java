@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package equipopokeapi.service.Configuration;
 
 import equipopokeapi.service.ConfigurationFilter.JwtFilter;
@@ -30,19 +29,20 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
+
     @Autowired
-    private JwtFilter jwtFilter; 
-    
+    private JwtFilter jwtFilter;
+
     @Bean
     public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        
+
         configuration.setAllowedOriginPatterns(Arrays.asList(
-            "http://192.167.0.*:4200", 
-            "http://192.167.1.*:4200", 
-            "http://localhost:4200"
+                "http://192.167.0.*:4200",
+                "http://192.167.1.*:4200",
+                "http://localhost:4200"
         ));
-        
+
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
@@ -51,24 +51,33 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception { 
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         return http
-             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-        .csrf(csrf -> csrf.disable())
-            .sessionManagement(session -> 
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            )
-
-            .authorizeHttpRequests(auth -> auth
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session
+                        -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/**").permitAll()
-                    .requestMatchers("/pokemon").permitAll()
+                .requestMatchers("/pokemon").permitAll()
                 .anyRequest().authenticated()
-            )
+                )
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
+    }
 
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
 
-            .build();
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
     }
 }
